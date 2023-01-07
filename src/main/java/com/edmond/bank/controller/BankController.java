@@ -25,15 +25,6 @@ public class BankController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private AccountRepository accountRepository;
-	
-	@Autowired
-	private TransactionsRepository transactionRepository;
-	
 	@GetMapping("/")
 	public String home() {
 		return "index";
@@ -43,12 +34,8 @@ public class BankController {
 	public String edmondsAccount(Model theModel) {
 		User userEdmond = userService.findById(2);
 		theModel.addAttribute("user", userEdmond);
-		
-		List<Account> accountEdmond = accountRepository.findByUserId(userEdmond.getId());
-		theModel.addAttribute("account", accountEdmond);
-		
-		List<Transactions> transactionsEdmond = transactionRepository.findByAccountId(5);
-		theModel.addAttribute("transactions", transactionsEdmond);
+		theModel.addAttribute("account", userEdmond.getAccountList());
+		theModel.addAttribute("transactions", userEdmond.getAccountList().get(0).getTransactionsList());
 		
 		return "edmond";
 		
