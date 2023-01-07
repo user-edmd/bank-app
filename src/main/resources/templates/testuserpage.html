@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.rtl.min.css"
+	integrity="sha384-+4j30LffJ4tgIMrq9CwHvn0NjEvmuDCOfk6Rpg2xg7zgOxWWtLtozDEEVvBPgHqE"
+	crossorigin="anonymous">
+
+<title>Test Page</title>
+</head>
+<body>
+	<div class="container">
+		<h3>Weclome</h3>
+		<h3 th:text="${user.firstName}"></h3>
+		<hr>
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Address</th>
+					<th>SSN</th>
+					<th>DOB</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td th:text="${user.firstName}" />
+					<td th:text="${user.lastName}" />
+					<td th:text="${user.address}" />
+					<td th:text="${user.ssn}" />
+					<td th:text="${user.dob}" />
+				</tr>
+			</tbody>
+
+		</table>
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>Account Type</th>
+					<th>Interest Rate</th>
+					<th>User_id</th>
+				</tr>
+
+
+			</thead>
+
+			<tbody>
+				<tr th:each="tempAccounts : ${userAccounts}">
+					<td th:text="${tempAccounts.accountType}" />
+					<td th:text="${tempAccounts.interestRate}" />
+					<td th:text="${tempAccounts.userId}" />
+				</tr>
+			</tbody>
+
+		</table>
+
+	</div>
+	<div class="container">
+		<table class="table table-bordered table-striped" width=100%
+			th:each="tempAccounts : ${userAccounts}">
+			<tr>
+				<th th:text="${tempAccounts.accountType}" />
+				<th>Transaction Type</th>
+				<th>Amount</th>
+			</tr>
+			<tr th:each="transaction : ${tempAccounts.transactionsList}">
+				<td></td>
+				<td th:text="${transaction.transactionType}" />
+				<td th:text="${transaction.amount}" />
+			</tr>
+		</table>
+	</div>
+	<div class="container" align="center">
+		<div class="card" style="width: 18rem;"
+			th:each="tempAccounts : ${userAccounts}">
+			<div class="card-body">
+				<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5>
+				<h6 class="card-subtitle mb-2 text-muted" th:text="${tempAccounts.interestRate}"></h6>
+				<p class="card-text">Some quick example text to build on the
+					card title and make up the bulk of the card's content.</p>
+				<a href="#" class="card-link">Card link</a> <a href="#"
+					class="card-link">Another link</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
