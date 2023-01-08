@@ -32,38 +32,19 @@ public class BankController {
 	private UserRepository userRepository;
 
 	@GetMapping("/")
-	public String home() {
+	public String home(Model theModel) {
+		List<User> allUsers = userRepository.findAll();
+		theModel.addAttribute("options", allUsers);
 		return "index";
 	}
 
-	@GetMapping("/edmond")
-	public String edmondsAccount(Model theModel) {
-		User userEdmond = userService.findById(2);
-		theModel.addAttribute("user", userEdmond);
-		theModel.addAttribute("account", userEdmond.getAccountList().get(0).getTransactionsList());
-
-		return "edmond";
-
-	}
-
-	@GetMapping("/test")
-	public String testPage(Model theModel) {
-		List<User> userTest = userRepository.findAll();
-		theModel.addAttribute("options", userTest);
-
-		return "test";
-
-	}
-
-	@GetMapping("test/{id}")
+	@GetMapping("user/{id}")
 	public String retrieveUser(@PathVariable("id") int id, Model theModel) {
 
 		User userTest = userService.findById(id);
 		theModel.addAttribute("user", userTest);
 		theModel.addAttribute("userAccounts", userTest.getAccountList());
-		theModel.addAttribute("userTransactions", userTest.getAccountList());
-
-		return "testuserpage";
+		return "user";
 	}
 
 }

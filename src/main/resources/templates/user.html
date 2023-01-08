@@ -83,11 +83,9 @@
 			th:each="tempAccounts : ${userAccounts}">
 			<div class="card-body">
 				<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5>
-				<h6 class="card-subtitle mb-2 text-muted" th:text="${tempAccounts.interestRate}"></h6>
-				<p class="card-text">Some quick example text to build on the
-					card title and make up the bulk of the card's content.</p>
-				<a href="#" class="card-link">Card link</a> <a href="#"
-					class="card-link">Another link</a>
+				<h6 class="card-subtitle mb-2 text-muted" th:text="${tempAccounts.getHiddenInterestRate}"></h6>
+				<p class="card-text">Balance:</p>
+				<a th:href="@{/test/{id}(id=${tempAccounts.id})}" class="card-link">View Transactions</a>
 			</div>
 		</div>
 	</div>

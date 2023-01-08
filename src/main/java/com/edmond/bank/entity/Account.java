@@ -36,6 +36,13 @@ public class Account {
 
 	public Account() { }
 	
+	public String getHiddenInterestRate() {
+		interestRate = this.getInterestRate();
+		
+		return "(..." + interestRate.substring(12, 16) + ")";
+		
+	}
+	
     @ManyToOne
     @JoinColumn(name="User_id", nullable=false)
     private User user;
