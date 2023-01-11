@@ -25,7 +25,7 @@ public class TransactionsServiceImpl implements TransactionsService {
         if (result.isPresent()) {
         	transactions = result.get();
         } else {
-            throw new RuntimeException("Did not find user id");
+            throw new RuntimeException("Did not find transaction id");
         }
         return transactions;
     }

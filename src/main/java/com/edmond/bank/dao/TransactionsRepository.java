@@ -13,7 +13,7 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Inte
 	
 	List<Transactions> findByAccountId(int accountId);
 	
-	@Query(value = "SELECT SUM(m.amount) FROM transactions m", nativeQuery = true)
-	Double balance();
+//	@Query(value = "SELECT SUM(m.amount) FROM transactions m", nativeQuery = true)
+//	Double balance();
 
 }

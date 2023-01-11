@@ -29,6 +29,9 @@ public class BankController {
 	private UserService userService;
 	
 	@Autowired
+	private TransactionsRepository transactionsRepository;
+	
+	@Autowired
 	private UserRepository userRepository;
 
 	@GetMapping("/")
@@ -45,6 +48,14 @@ public class BankController {
 		theModel.addAttribute("user", userTest);
 		theModel.addAttribute("userAccounts", userTest.getAccountList());
 		return "user";
+	}
+	
+	@GetMapping("user/account/{id}")
+	public String retrieveAccount(@PathVariable("id") int id, Model theModel) {
+		
+		List<Transactions> transactionsTest = transactionsRepository.findByAccountId(id);
+		theModel.addAttribute("transactions", transactionsTest);
+		return "account";
 	}
 
 }

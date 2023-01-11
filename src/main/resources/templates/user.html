@@ -16,8 +16,10 @@
 </head>
 <body>
 	<div class="container">
-		<h3>Weclome</h3>
-		<h3 th:text="${user.firstName}"></h3>
+	<h3>
+		<span  th:remove="tag">Welcome</span>
+		<span th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
+	</h3>
 		<hr>
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
@@ -41,51 +43,17 @@
 			</tbody>
 
 		</table>
-		<table class="table table-bordered table-striped">
-			<thead class="thead-dark">
-				<tr>
-					<th>Account Type</th>
-					<th>Interest Rate</th>
-					<th>User_id</th>
-				</tr>
-
-
-			</thead>
-
-			<tbody>
-				<tr th:each="tempAccounts : ${userAccounts}">
-					<td th:text="${tempAccounts.accountType}" />
-					<td th:text="${tempAccounts.interestRate}" />
-					<td th:text="${tempAccounts.userId}" />
-				</tr>
-			</tbody>
-
-		</table>
-
 	</div>
 	<div class="container">
-		<table class="table table-bordered table-striped" width=100%
-			th:each="tempAccounts : ${userAccounts}">
-			<tr>
-				<th th:text="${tempAccounts.accountType}" />
-				<th>Transaction Type</th>
-				<th>Amount</th>
-			</tr>
-			<tr th:each="transaction : ${tempAccounts.transactionsList}">
-				<td></td>
-				<td th:text="${transaction.transactionType}" />
-				<td th:text="${transaction.amount}" />
-			</tr>
-		</table>
-	</div>
-	<div class="container" align="center">
 		<div class="card" style="width: 18rem;"
 			th:each="tempAccounts : ${userAccounts}">
 			<div class="card-body">
 				<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5>
-				<h6 class="card-subtitle mb-2 text-muted" th:text="${tempAccounts.getHiddenInterestRate}"></h6>
+				<h6 class="card-subtitle mb-2 text-muted"
+					th:text="${tempAccounts.getHiddenInterestRate}"></h6>
 				<p class="card-text">Balance:</p>
-				<a th:href="@{/test/{id}(id=${tempAccounts.id})}" class="card-link">View Transactions</a>
+				<a th:href="@{/user/account/{id}(id=${tempAccounts.id})}"
+					class="card-link">View Transactions</a>
 			</div>
 		</div>
 	</div>
