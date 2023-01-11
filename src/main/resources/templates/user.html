@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.rtl.min.css"
+	integrity="sha384-+4j30LffJ4tgIMrq9CwHvn0NjEvmuDCOfk6Rpg2xg7zgOxWWtLtozDEEVvBPgHqE"
+	crossorigin="anonymous">
+
+<title>Test Page</title>
+</head>
+<body>
+	<div class="container">
+	<h3>
+		<span  th:remove="tag">Welcome</span>
+		<span th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
+	</h3>
+		<hr>
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Address</th>
+					<th>SSN</th>
+					<th>DOB</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td th:text="${user.firstName}" />
+					<td th:text="${user.lastName}" />
+					<td th:text="${user.address}" />
+					<td th:text="${user.ssn}" />
+					<td th:text="${user.dob}" />
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+	<div class="container">
+		<div class="card" style="width: 18rem;"
+			th:each="tempAccounts : ${userAccounts}">
+			<div class="card-body">
+				<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5>
+				<h6 class="card-subtitle mb-2 text-muted"
+					th:text="${tempAccounts.getHiddenInterestRate}"></h6>
+				<p class="card-text">Balance:</p>
+				<a th:href="@{/user/account/{id}(id=${tempAccounts.id})}"
+					class="card-link">View Transactions</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

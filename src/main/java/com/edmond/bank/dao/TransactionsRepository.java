@@ -8,8 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import com.edmond.bank.entity.Transactions;
 
+@Repository
 public interface TransactionsRepository extends JpaRepository<Transactions, Integer> {
 	
 	List<Transactions> findByAccountId(int accountId);
+	
+//	@Query(value = "SELECT SUM(m.amount) FROM transactions m", nativeQuery = true)
+//	Double balance();
 
 }

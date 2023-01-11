@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
         if (result.isPresent()) {
         	account = result.get();
         } else {
-            throw new RuntimeException("Did not find user id");
+            throw new RuntimeException("Did not find account id");
         }
         return account;
 		
