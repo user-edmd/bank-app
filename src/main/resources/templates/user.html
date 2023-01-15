@@ -12,14 +12,14 @@
 	integrity="sha384-+4j30LffJ4tgIMrq9CwHvn0NjEvmuDCOfk6Rpg2xg7zgOxWWtLtozDEEVvBPgHqE"
 	crossorigin="anonymous">
 
-<title>Test Page</title>
+<title>User Page</title>
 </head>
 <body>
 	<div class="container">
-	<h3>
-		<span  th:remove="tag">Welcome</span>
-		<span th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
-	</h3>
+		<h3>
+			<span th:remove="tag">Welcome</span> <span
+				th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
+		</h3>
 		<hr>
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">

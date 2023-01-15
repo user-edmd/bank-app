@@ -32,7 +32,7 @@ public class Transactions {
 	private String transactionType;
 	
 	@Column(name="amount")
-	private String amount;
+	private Double amount;
 	
 	@Column(name="date")
 	private String date;
@@ -40,11 +40,11 @@ public class Transactions {
 	@Column(name="Account_id", insertable=false, updatable=false)
 	private int accountId;
 	
-	public Transactions() { }
-	
     @ManyToOne
     @JoinColumn(name="Account_id", nullable=false)
     private Account account;
+    
+	public Transactions() { }
    
 		
 }
