@@ -43,7 +43,6 @@ public class BankController {
 
 	@GetMapping("user/{id}")
 	public String retrieveUser(@PathVariable("id") int id, Model theModel) {
-
 		User userTest = userService.findById(id);
 		theModel.addAttribute("user", userTest);
 		theModel.addAttribute("userAccounts", userTest.getAccountList());
@@ -55,6 +54,7 @@ public class BankController {
 		
 		List<Transactions> transactionsTest = transactionsRepository.findByAccountId(id);
 		theModel.addAttribute("transactions", transactionsTest);
+		theModel.addAttribute("transactionsBalance", transactionsRepository.findTotalByAccountId(id));
 		return "account";
 	}
 

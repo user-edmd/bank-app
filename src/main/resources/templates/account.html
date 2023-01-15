@@ -12,31 +12,29 @@
 	integrity="sha384-+4j30LffJ4tgIMrq9CwHvn0NjEvmuDCOfk6Rpg2xg7zgOxWWtLtozDEEVvBPgHqE"
 	crossorigin="anonymous">
 
-<title>Test Page</title>
+<title>Account Page</title>
 </head>
 <body>
+	<h2 class="p-3 mb-2 bg-light text-dark">
+		<span th:inline="text">Balance: $[[${#numbers.formatDecimal(transactionsBalance, 0, 'COMMA', 2, 'POINT')}]]</span>
+	</h2><br>
 	<div class="container">
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th>ID</th>
 					<th>Transaction Type</th>
 					<th>Amount</th>
 					<th>Date</th>
-					<th>Account_id</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="tempTransaction : ${transactions}">
-					<td th:text="${tempTransaction.id}" />
 					<td th:text="${tempTransaction.transactionType}" />
 					<td th:text="${tempTransaction.amount}" />
 					<td th:text="${tempTransaction.date}" />
-					<td th:text="${tempTransaction.accountId}" />
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
 </body>
 </html>

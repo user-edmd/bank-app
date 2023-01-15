@@ -40,9 +40,9 @@ public class User {
 	@Column(name="dob")
 	private String dob;
 	
-	public User() { }
-	
 	@OneToMany(mappedBy="user")
 	List<Account> accountList;
+	
+	public User() { }
 		
 }

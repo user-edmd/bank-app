@@ -34,8 +34,6 @@ public class Account {
 	@Column(name="User_id", insertable=false, updatable=false)
 	private int userId;
 
-	public Account() { }
-	
 	public String getHiddenInterestRate() {
 		interestRate = this.getInterestRate();
 		
@@ -43,11 +41,14 @@ public class Account {
 		
 	}
 	
+	
     @ManyToOne
     @JoinColumn(name="User_id", nullable=false)
     private User user;
     
 	@OneToMany(mappedBy="account")
 	List<Transactions> transactionsList;
+	
+	public Account() { }
 
 }
