@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,33 +31,46 @@ public class BankController {
 	private UserService userService;
 	
 	@Autowired
-	private TransactionsRepository transactionsRepository;
+	private AccountService accountService;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private TransactionsService transactionsService;
 
 	@GetMapping("/")
 	public String home(Model theModel) {
-		List<User> allUsers = userRepository.findAll();
+		List<User> allUsers = userService.findAll();
 		theModel.addAttribute("options", allUsers);
 		return "index";
 	}
 
-	@GetMapping("user/{id}")
-	public String retrieveUser(@PathVariable("id") int id, Model theModel) {
-		User userTest = userService.findById(id);
+	@GetMapping("user/{userId}")
+	public String retrieveUser(@PathVariable("userId") int userId, Model theModel) {
+		User userTest = userService.findById(userId);
 		theModel.addAttribute("user", userTest);
 		theModel.addAttribute("userAccounts", userTest.getAccountList());
 		return "user";
 	}
 	
-	@GetMapping("user/account/{id}")
-	public String retrieveAccount(@PathVariable("id") int id, Model theModel) {
-		
-		List<Transactions> transactionsTest = transactionsRepository.findByAccountId(id);
-		theModel.addAttribute("transactions", transactionsTest);
-		theModel.addAttribute("transactionsBalance", transactionsRepository.findTotalByAccountId(id));
+	@GetMapping("user/{userId}/account/{accountId}")
+	public String retrieveAccount(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,Model theModel) {
+		Account accountTest = accountService.findById(accountId);
+		theModel.addAttribute("transactions", accountTest.getTransactionsList());
+		theModel.addAttribute("transactionsBalance", transactionsService.findTotalByAccountId(accountId));
 		return "account";
 	}
+	
+	@GetMapping("create-user")
+	public String createUser(Model theModel) {
+		User user = new User();
+		theModel.addAttribute("user", user);
+		return "create-user";
+	}
+	
+	@PostMapping("/create-user")
+	public String submitForm(@ModelAttribute("user") User user) {
+	    userService.save(user);
+	    return "new-user-success";
+	}
+
 
 }

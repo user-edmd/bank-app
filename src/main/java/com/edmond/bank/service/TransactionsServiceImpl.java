@@ -38,5 +38,8 @@ public class TransactionsServiceImpl implements TransactionsService {
     public void deleteById(int theId) {
     	transactionsRepository.deleteById(theId);
     }
-   
+    
+    public Double findTotalByAccountId(int accountId) {
+    	return transactionsRepository.findTotalByAccountId(accountId);
+    }
 }

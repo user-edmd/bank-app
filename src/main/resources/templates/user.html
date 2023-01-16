@@ -48,7 +48,7 @@
 				<h6 class="card-subtitle mb-2 text-muted"
 					th:text="${tempAccounts.getHiddenInterestRate}"></h6>
 				<p class="card-text">Balance:</p>
-				<a th:href="@{/user/account/{id}(id=${tempAccounts.id})}"
+				<a th:href="@{/user/{userId}/account/{accountId} (userId=${tempAccounts.userId}, accountId=${tempAccounts.id})}"
 					class="card-link">View Transactions</a>
 			</div>
 		</div>

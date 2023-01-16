@@ -15,10 +15,14 @@
 <title>Account Page</title>
 </head>
 <body>
-	<h2 class="p-3 mb-2 bg-light text-dark">
-		<span th:inline="text">Balance: $[[${#numbers.formatDecimal(transactionsBalance, 0, 'COMMA', 2, 'POINT')}]]</span>
-	</h2><br>
 	<div class="container">
+		<h2 class="p-3 mb-2 bg-light text-dark">
+			<span th:inline="text">Balance:
+				$[[${#numbers.formatDecimal(transactionsBalance, 0, 'COMMA', 2,
+				'POINT')}]]</span>
+		</h2>
+		<br>
+
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>

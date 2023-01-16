@@ -13,5 +13,7 @@ public interface TransactionsService {
 	public void save(Transactions transactions);
 	
 	public void deleteById(int theId);
+	
+	public Double findTotalByAccountId(int accountId);
 
 }

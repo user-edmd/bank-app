@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<html lang="en">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -12,19 +11,12 @@
 	integrity="sha384-+4j30LffJ4tgIMrq9CwHvn0NjEvmuDCOfk6Rpg2xg7zgOxWWtLtozDEEVvBPgHqE"
 	crossorigin="anonymous">
 
-<title>Users Directory</title>
+<title>Create User</title>
 </head>
 <body>
 	<div class="container">
-		<h3>Users Directory</h3>
+		<h3>Success</h3>
 		<hr>
-		<ul>
-			<li th:each="option : ${options}" th:value="${option.firstName}">
-				<a th:href="@{/user/{id}(id=${option.id})}"
-				th:text="${option.firstName} + ' ' + ${option.lastName}"></a>
-		</ul>
-		<p><a href="/create-user">Add New User</a>
-		</p>
 	</div>
 </body>
 </html>
