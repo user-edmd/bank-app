@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<html lang="en">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -23,8 +22,8 @@
 				<a th:href="@{/user/{id}(id=${option.id})}"
 				th:text="${option.firstName} + ' ' + ${option.lastName}"></a>
 		</ul>
-		<p><a href="/create-user">Add New User</a><br>
-		<a href="/delete-user">Delete User</a>
+		<p>
+			<a href="/create-user" class="btn btn-primary">Add New User</a>
 		</p>
 	</div>
 </body>
