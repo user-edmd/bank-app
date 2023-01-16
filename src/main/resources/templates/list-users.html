@@ -23,6 +23,8 @@
         <th>Address</th>
         <th>SSN</th>
         <th>DOB</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
 
 
@@ -35,6 +37,8 @@
         <td th:text = "${tempUser.address}" />
         <td th:text = "${tempUser.ssn}" />
         <td th:text = "${tempUser.dob}" />
+        <td><a th:href="@{/user/{userId}/edit (userId=${tempUser.id})}">Edit</a></td>
+        <td><a th:href="@{/user/{userId}/delete (userId=${tempUser.id})}">Delete</a></td>
     </tr>
     </tbody>
 

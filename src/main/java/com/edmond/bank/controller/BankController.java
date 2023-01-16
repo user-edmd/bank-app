@@ -59,7 +59,7 @@ public class BankController {
 	}
 	
 	@PostMapping("user/{userId}/edit")
-	public String submitForm(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
+	public String editUserSuccess(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
 		User tempUser = userService.findById(userId);
 		tempUser.setFirstName(user.getFirstName());
 		tempUser.setLastName(user.getLastName());
@@ -68,6 +68,19 @@ public class BankController {
 		tempUser.setSsn(user.getSsn());
 		userService.save(tempUser);
 		return "edit-user-success";
+	}
+	
+	@GetMapping("user/{userId}/delete")
+	public String deleteUser(@PathVariable("userId") int userId, Model theModel) {
+		User userTest = userService.findById(userId);
+		theModel.addAttribute("user", userTest);
+		return "delete-user";
+	}
+	
+	@PostMapping("user/{userId}/delete")
+	public String deleteUserSuccess(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
+		userService.deleteById(userId);
+		return "delete-user-success";
 	}
 	
 	@GetMapping("user/{userId}/account/{accountId}")
@@ -87,7 +100,7 @@ public class BankController {
 	}
 	
 	@PostMapping("/create-user")
-	public String submitForm(@ModelAttribute("user") User user) {
+	public String createUserSuccess(@ModelAttribute("user") User user) {
 	    userService.save(user);
 	    return "create-user-success";
 	}

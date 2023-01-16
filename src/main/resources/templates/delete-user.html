@@ -11,13 +11,14 @@
 	integrity="sha384-+4j30LffJ4tgIMrq9CwHvn0NjEvmuDCOfk6Rpg2xg7zgOxWWtLtozDEEVvBPgHqE"
 	crossorigin="anonymous">
 
-<title>Edit User</title>
+<title>Delete User</title>
 </head>
 <body>
 	<div class="container">
-		<h3>Successfully Updated</h3>
+		<h3>Delete User</h3>
 		<hr>
-		<form action="#" th:object="${user}">
+		<form action="#" th:action="@{/user/{userId}/delete (userId=${user.id})}" method="post"
+			th:object="${user}">
 			<div class="mb-3">
 				<label class="form-label">First Name</label> <input type="text"
 					th:field="*{firstName}" class="form-control" disabled>
@@ -32,14 +33,13 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Date of Birth</label> <input type="text"
-					th:field="*{dob}" class="form-control" th:placeholder="yyyy-mm-dd"
-					disabled>
+					th:field="*{dob}" class="form-control" th:placeholder="yyyy-mm-dd" disabled>
 			</div>
 			<div class="mb-3">
 				<label class="form-label">SSN</label> <input type="text"
-					th:field="*{ssn}" class="form-control" placeholder="xxx-xx-xxxx"
-					disabled>
+					th:field="*{ssn}" class="form-control" placeholder="xxx-xx-xxxx" disabled>
 			</div>
+			<button type="submit" class="btn btn-danger">Delete</button>
 		</form>
 	</div>
 </body>
