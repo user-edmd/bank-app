@@ -121,6 +121,27 @@ public class BankController {
 		accountService.save(account);
 		return "create-account-success";
 	}
+	
+	@GetMapping("/user/{userId}/account/{accountId}/create-transaction")
+	public String createTransaction(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId, Model theModel) {
+		User user = userService.findById(userId);
+		Account account = accountService.findById(accountId);
+		Transactions transactions = new Transactions();
+		theModel.addAttribute("user", user);
+		theModel.addAttribute("account", account);
+		theModel.addAttribute("transactions", transactions);
+		return "create-transaction";
+	}
+	
+	@PostMapping("/user/{userId}/account/{accountId}/create-transaction")
+	public String createTransactionSuccess(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId, @ModelAttribute("transactions") Transactions transactions) {
+		User user = userService.findById(userId);
+		Account account = accountService.findById(accountId);
+		transactions.setAccount(account);
+		account.setUser(user);
+		transactionsService.save(transactions);
+		return "create-transaction-success";
+	}
 
 
 }

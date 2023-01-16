@@ -41,6 +41,13 @@ public class Account {
 		
 	}
 	
+	public Double getAccountBalance() {
+		double accountBalance = 0.0;
+		for (Transactions transaction : transactionsList) {
+			accountBalance += transaction.getAmount();
+		}
+		return accountBalance;
+	}
 	
     @ManyToOne
     @JoinColumn(name="User_id", nullable=false)
