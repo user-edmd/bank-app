@@ -51,6 +51,25 @@ public class BankController {
 		return "user";
 	}
 	
+	@GetMapping("user/{userId}/edit")
+	public String editUser(@PathVariable("userId") int userId, Model theModel) {
+		User userTest = userService.findById(userId);
+		theModel.addAttribute("user", userTest);
+		return "edit-user";
+	}
+	
+	@PostMapping("user/{userId}/edit")
+	public String submitForm(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
+		User tempUser = userService.findById(userId);
+		tempUser.setFirstName(user.getFirstName());
+		tempUser.setLastName(user.getLastName());
+		tempUser.setAddress(user.getAddress());
+		tempUser.setDob(user.getDob());
+		tempUser.setSsn(user.getSsn());
+		userService.save(tempUser);
+		return "edit-user-success";
+	}
+	
 	@GetMapping("user/{userId}/account/{accountId}")
 	public String retrieveAccount(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,Model theModel) {
 		Account accountTest = accountService.findById(accountId);
@@ -58,6 +77,7 @@ public class BankController {
 		theModel.addAttribute("transactionsBalance", transactionsService.findTotalByAccountId(accountId));
 		return "account";
 	}
+	
 	
 	@GetMapping("create-user")
 	public String createUser(Model theModel) {
@@ -69,7 +89,7 @@ public class BankController {
 	@PostMapping("/create-user")
 	public String submitForm(@ModelAttribute("user") User user) {
 	    userService.save(user);
-	    return "new-user-success";
+	    return "create-user-success";
 	}
 
 
