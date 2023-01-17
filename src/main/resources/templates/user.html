@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<html lang="en">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.rtl.min.css"
@@ -27,6 +25,7 @@
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Address</th>
+					<th></th>
 				</tr>
 			</thead>
 
@@ -35,21 +34,29 @@
 					<td th:text="${user.firstName}" />
 					<td th:text="${user.lastName}" />
 					<td th:text="${user.address}" />
+					<td><a th:href="@{/user/{userId}/edit (userId=${user.id})}"
+						class="btn btn-secondary btn-sm">Edit</a></td>
 				</tr>
 			</tbody>
 
 		</table>
-	</div>
-	<div class="container">
-		<div class="card" style="width: 18rem;"
-			th:each="tempAccounts : ${userAccounts}">
-			<div class="card-body">
-				<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5>
-				<h6 class="card-subtitle mb-2 text-muted"
-					th:text="${tempAccounts.getHiddenInterestRate}"></h6>
-				<p class="card-text">Balance:</p>
-				<a th:href="@{/user/account/{id}(id=${tempAccounts.id})}"
-					class="card-link">View Transactions</a>
+		<div>
+		<a th:href="@{/user/{userId}/create-account (userId=${user.id})}"
+						class="btn btn-primary">Add Account</a>
+		</div>
+		<br>
+		<div th:each="tempAccounts : ${userAccounts}">
+			<div class="card text-bg-light mb-3" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5>
+					<h6 class="card-subtitle mb-2 text-muted"
+						th:text="${tempAccounts.getHiddenAccountNumber}"></h6>
+			<h5 th:inline="text">Balance:
+				$[[${#numbers.formatDecimal(tempAccounts.getAccountBalance, 0, 'COMMA', 2,
+				'POINT')}]]</h5>
+					<a th:href="@{/user/{userId}/account/{accountId} (userId=${tempAccounts.userId}, accountId=${tempAccounts.id})}"
+						class="btn btn-primary">View Transactions</a>
+				</div>
 			</div>
 		</div>
 	</div>

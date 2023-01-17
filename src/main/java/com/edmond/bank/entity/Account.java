@@ -28,19 +28,26 @@ public class Account {
 	@Column(name="account_type")
 	private String accountType;
 	
-	@Column(name="interest_rate")
-	private String interestRate;
+	@Column(name="account_number")
+	private String accountNumber;
 	
 	@Column(name="User_id", insertable=false, updatable=false)
 	private int userId;
 
-	public String getHiddenInterestRate() {
-		interestRate = this.getInterestRate();
+	public String getHiddenAccountNumber() {
+		accountNumber = this.getAccountNumber();
 		
-		return "(..." + interestRate.substring(12, 16) + ")";
+		return "(..." + accountNumber.substring(12, 16) + ")";
 		
 	}
 	
+	public Double getAccountBalance() {
+		double accountBalance = 0.0;
+		for (Transactions transaction : transactionsList) {
+			accountBalance += transaction.getAmount();
+		}
+		return accountBalance;
+	}
 	
     @ManyToOne
     @JoinColumn(name="User_id", nullable=false)

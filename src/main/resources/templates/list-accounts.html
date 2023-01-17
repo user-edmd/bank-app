@@ -20,7 +20,7 @@
       <tr>
         <th>ID</th>
         <th>Account Type</th>
-        <th>Interest Rate</th>
+        <th>Account Number</th>
         <th>User_id</th>
       </tr>
 
@@ -31,7 +31,7 @@
       <tr th:each="tempAccounts : ${account}">
 		<td th:text = "${tempAccounts.id}" />
         <td th:text = "${tempAccounts.accountType}" />
-        <td th:text = "${tempAccounts.interestRate}" />
+        <td th:text = "${tempAccounts.accountNumber}" />
         <td th:text = "${tempAccounts.userId}" />
     </tr>
     </tbody>

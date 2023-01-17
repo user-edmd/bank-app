@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<html lang="en">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -15,10 +14,14 @@
 <title>Account Page</title>
 </head>
 <body>
-	<h2 class="p-3 mb-2 bg-light text-dark">
-		<span th:inline="text">Balance: $[[${#numbers.formatDecimal(transactionsBalance, 0, 'COMMA', 2, 'POINT')}]]</span>
-	</h2><br>
 	<div class="container">
+		<h2 class="p-3 mb-2 bg-light text-dark">
+			<span th:inline="text">Balance:
+				$[[${#numbers.formatDecimal(transactionsBalance, 0, 'COMMA', 2,
+				'POINT')}]]</span>
+		</h2>
+		<br>
+
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -35,6 +38,10 @@
 				</tr>
 			</tbody>
 		</table>
+		<div>
+			<a th:href="@{/user/{userId}/account/{accountId}/create-transaction (userId=${account.getUserId}, accountId=${account.id})}"
+				class="btn btn-primary">Add Transaction</a>
+		</div>
 	</div>
 </body>
 </html>
