@@ -86,6 +86,7 @@ public class BankController {
 	@GetMapping("/user/{userId}/account/{accountId}")
 	public String retrieveAccount(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,Model theModel) {
 		Account accountTest = accountService.findById(accountId);
+		theModel.addAttribute("account", accountTest);
 		theModel.addAttribute("transactions", accountTest.getTransactionsList());
 		theModel.addAttribute("transactionsBalance", transactionsService.findTotalByAccountId(accountId));
 		return "account";

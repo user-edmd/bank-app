@@ -38,6 +38,10 @@
 				</tr>
 			</tbody>
 		</table>
+		<div>
+			<a th:href="@{/user/{userId}/account/{accountId}/create-transaction (userId=${account.getUserId}, accountId=${account.id})}"
+				class="btn btn-primary">Add Transaction</a>
+		</div>
 	</div>
 </body>
 </html>
