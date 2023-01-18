@@ -14,28 +14,32 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private AccountRepository accountRepository;
-	
-	public List<Account> findAll() { return accountRepository.findAll(); }
-    
-	public Account findById(int theId) {
-        Optional<Account> result = accountRepository.findById(theId);
-        Account account = null;
-        if (result.isPresent()) {
-        	account = result.get();
-        } else {
-            throw new RuntimeException("Did not find account id");
-        }
-        return account;
-		
-    }
 
-    
-    public void save(Account theAccount) {
-    	accountRepository.save(theAccount);
-    }
-    
-    public void deleteById(int theId) {
-    	accountRepository.deleteById(theId);
-    }
-   
+	public List<Account> findAll() {
+		return accountRepository.findAll();
+	}
+
+	public Account findById(int theId) {
+		Optional<Account> result = accountRepository.findById(theId);
+		Account account = null;
+		if (result.isPresent()) {
+			account = result.get();
+		} else {
+			throw new RuntimeException("Did not find account id");
+		}
+		return account;
+
+	}
+
+	public void save(Account theAccount) {
+		Optional<String> optionalAccountNumber = Optional.ofNullable(theAccount.getAccountNumber());
+		if (!optionalAccountNumber.isPresent())
+			theAccount.setAccountNumber(String.valueOf((long) (Math.random() * 10000000000000000L)));
+		accountRepository.save(theAccount);
+	}
+
+	public void deleteById(int theId) {
+		accountRepository.deleteById(theId);
+	}
+
 }
