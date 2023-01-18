@@ -21,13 +21,9 @@
 				<label class="form-label">Account Type</label> <select
 					class="form-select" th:field="*{accountType}">
 					<option th:value="'Checking'" th:text="Checking"></option>
-					<option th:value="'Saving'" th:text="Saving"></option>
+					<option th:value="'Savings'" th:text="Savings"></option>
 				</select>
 			</div>
-<!-- 			<div class="mb-3">
-				<label class="form-label">Account Number</label> <input type="text"
-					th:field="*{accountNumber}" class="form-control" disabled>
-			</div> -->
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>

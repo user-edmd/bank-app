@@ -39,22 +39,49 @@
 		</table>
 		<div>
 		<a th:href="@{/user/{userId}/create-account (userId=${user.id})}"
-						class="btn btn-primary"><i class="bi bi-piggy-bank"></i> Add Account</a>
+						class="btn btn-success"><i class="bi bi-piggy-bank"></i> Add Account</a>
 		</div>
 		<br>
-		<div th:each="tempAccounts : ${userAccounts}">
-			<div class="card text-bg-light mb-3" style="width: 18rem;">
-				<div class="card-body">
-					<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5>
-					<h6 class="card-subtitle mb-2 text-muted"
-						th:text="${tempAccounts.getHiddenAccountNumber}"></h6>
-			<h5 th:inline="text">Balance:
+<!-- 		<div th:each="tempAccounts : ${userAccounts}"> -->
+<!-- 			<div class="card text-bg-light mb-3" style="width: 18rem;"> -->
+<!-- 				<div class="card-body"> -->
+<!-- 					<h5 class="card-title" th:text="${tempAccounts.accountType}"></h5> -->
+<!-- 					<h6 class="card-subtitle mb-2 text-muted" -->
+<!-- 						th:text="${tempAccounts.getHiddenAccountNumber}"></h6> -->
+<!-- 			<h5 th:inline="text">Balance: -->
+<!-- 				$[[${#numbers.formatDecimal(tempAccounts.getAccountBalance, 0, 'COMMA', 2, -->
+<!-- 				'POINT')}]]</h5> -->
+<!-- 					<a th:href="@{/user/{userId}/account/{accountId} (userId=${tempAccounts.userId}, accountId=${tempAccounts.id})}" -->
+<!-- 						class="btn btn-primary btn-sm"><i class="bi bi-card-list"></i> View Transactions</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+		
+		
+		
+		<div class="row">
+<!-- 		  <div class="col-sm-6 mb-3 mb-sm-3" th:each="tempAccounts : ${userAccounts}"> -->
+		  <div class="col-sm-3 mb-3 mb-sm-3" th:each="tempAccounts : ${userAccounts}">
+		    <div class="card text-bg-light mb-3">
+		      <div class="card-body">
+		        <h5 class="card-title" th:inline="text">Balance:
 				$[[${#numbers.formatDecimal(tempAccounts.getAccountBalance, 0, 'COMMA', 2,
 				'POINT')}]]</h5>
-					<a th:href="@{/user/{userId}/account/{accountId} (userId=${tempAccounts.userId}, accountId=${tempAccounts.id})}"
-						class="btn btn-primary"><i class="bi bi-card-list"></i> View Transactions</a>
-				</div>
-			</div>
+		        <p class="card-text" th:text="'Account: ' + ${tempAccounts.accountType} + ' ' + ${tempAccounts.getHiddenAccountNumber}"></p>
+		        <a th:href="@{/user/{userId}/account/{accountId} (userId=${tempAccounts.userId}, accountId=${tempAccounts.id})}"
+						class="btn btn-primary btn-sm"><i class="bi bi-card-list"></i> View Transactions</a>
+		      </div>
+		    </div>
+		  </div>
+<!-- 		  <div class="col-sm-6">
+		    <div class="card">
+		      <div class="card-body">
+		        <h5 class="card-title">Special title treatment</h5>
+		        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+		        <a href="#" class="btn btn-primary">Go somewhere</a>
+		      </div>
+		    </div>
+		  </div> -->
 		</div>
 	</div>
 </body>
