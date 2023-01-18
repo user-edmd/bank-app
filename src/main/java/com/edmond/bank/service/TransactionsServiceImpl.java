@@ -3,13 +3,12 @@ package com.edmond.bank.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.edmond.bank.dao.TransactionsRepository;
-import com.edmond.bank.dao.UserRepository;
 import com.edmond.bank.entity.Transactions;
-import com.edmond.bank.entity.User;
 
 @Service
 public class TransactionsServiceImpl implements TransactionsService {
@@ -32,6 +31,14 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     
     public void save(Transactions theTransactions) {
+    	if (theTransactions.getTransactionType().equalsIgnoreCase("withdraw")) {
+    		Double temp = theTransactions.getAmount();
+    		temp *= -1;
+    		theTransactions.setAmount(temp);
+    	}
+    	
+    	if (theTransactions.getDate() == null)
+    		theTransactions.setDate(DateTime.now().toLocalDate().toString());
     	transactionsRepository.save(theTransactions);
     }
     

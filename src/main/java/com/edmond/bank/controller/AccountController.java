@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.edmond.bank.entity.Account;
-import com.edmond.bank.entity.User;
 import com.edmond.bank.service.AccountService;
-import com.edmond.bank.service.UserService;
 
 @Controller
 @RequestMapping("/accounts")
