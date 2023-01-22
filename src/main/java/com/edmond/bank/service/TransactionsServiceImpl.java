@@ -32,6 +32,9 @@ public class TransactionsServiceImpl implements TransactionsService {
     
     public void save(Transactions theTransactions) {
     	if (theTransactions.getTransactionType().equalsIgnoreCase("withdraw")) {
+    		if (theTransactions.getAccount().getAccountBalance() < theTransactions.getAmount()) {
+    			throw new RuntimeException("Not enough balance in account to withdraw.");
+    		}
     		Double temp = theTransactions.getAmount();
     		temp *= -1;
     		theTransactions.setAmount(temp);
