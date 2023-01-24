@@ -148,9 +148,7 @@ public class BankController {
 	
 	@PostMapping("/user/{userId}/create-transfer")
 	public String createTransfer(@ModelAttribute("accountTransfer") AccountTransfer accountTransfer) {
-		System.out.println("Account ID from: " + accountTransfer.getAccountIdFrom());
-		System.out.println("Account ID to: " + accountTransfer.getAccountIdTo());
-		System.out.println("Amount to Transfer: " + accountTransfer.getAmountToTransfer());
+		transactionsService.transferBetweenAccounts(accountService.findById(accountTransfer.getAccountIdFrom()), accountService.findById(accountTransfer.getAccountIdTo()), accountTransfer.getAmountToTransfer());
 		return "create-transfer";
 	}
 

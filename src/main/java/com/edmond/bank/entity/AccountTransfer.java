@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class AccountTransfer {
 	
-	private Integer accountIdFrom;
-	private Integer accountIdTo;
+	private int accountIdFrom;
+	private int accountIdTo;
 	private Double amountToTransfer;
 
 

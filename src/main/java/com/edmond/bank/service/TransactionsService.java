@@ -2,6 +2,7 @@ package com.edmond.bank.service;
 
 import java.util.List;
 
+import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
 
 public interface TransactionsService {
@@ -15,5 +16,7 @@ public interface TransactionsService {
 	public void deleteById(int theId);
 	
 	public Double findTotalByAccountId(int accountId);
+	
+	public void transferBetweenAccounts(Account accountIdTo, Account accountIdFrom, Double amount);
 
 }
