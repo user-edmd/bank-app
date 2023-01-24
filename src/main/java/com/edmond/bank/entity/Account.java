@@ -31,10 +31,9 @@ public class Account {
 	@Column(name="User_id", insertable=false, updatable=false)
 	private int userId;
 
-	public String getHiddenAccountNumber() {
+	public String lastFourDigitsAcctNumber() {
 		accountNumber = this.getAccountNumber();
-		
-		return "(..." + accountNumber.substring(12, 16) + ")";
+		return accountNumber.substring(12, 16);
 		
 	}
 	

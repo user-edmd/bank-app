@@ -22,16 +22,19 @@
 		<h3>Create Transfer</h3>
 		<hr>
 		<form action="#" th:object="${accountTransfer}" method="post">
+			<label class="form-label">Account to Transfer From:</label>
 			<select class="form-select mb-3"
 				th:field="${accountTransfer.accountIdFrom}">
 				<option th:value="${userAccount.id}"
 					th:each="userAccount : ${userAccounts}"
-					th:text="${userAccount.getHiddenAccountNumber}"></option>
-			</select> <select class="form-select mb-3"
+					th:text="${userAccount.accountType} + ' (...' + ${userAccount.lastFourDigitsAcctNumber} + ' )'"></option>
+			</select> 
+			<label class="form-label">Account to Transfer To:</label>
+			<select class="form-select mb-3"
 				th:field="${accountTransfer.accountIdTo}">
 				<option th:value="${userAccount.id}"
 					th:each="userAccount : ${userAccounts}"
-					th:text="${userAccount.getHiddenAccountNumber}"></option>
+					th:text="${userAccount.accountType} + ' (...' + ${userAccount.lastFourDigitsAcctNumber} + ' )'"></option>
 			</select>
 			<div class="mb-3">
 				<label class="form-label">Amount to Transfer:</label> <input

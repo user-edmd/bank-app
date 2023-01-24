@@ -19,9 +19,6 @@ public class TransactionsServiceImpl implements TransactionsService {
 	private TransactionsRepository transactionsRepository;
 	
 	@Autowired
-	private AccountService accountService;
-	
-	@Autowired
 	private UserService userService;
 	
 	public List<Transactions> findAll() { return transactionsRepository.findAll(); }
@@ -68,7 +65,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     	transactionFrom.setAccount(accountIdFrom);
     	transactionFrom.setAccountId(accountIdFrom.getId());
     	transactionFrom.setAmount(amount * -1);
-    	transactionFrom.setTransactionType("Transfer from: " + accountIdFrom.getHiddenAccountNumber());
+    	transactionFrom.setTransactionType("Transfer to Account (..." + accountIdTo.lastFourDigitsAcctNumber() + ")");
     	
     	User userTo = userService.findById(accountIdTo.getUserId());
     	accountIdTo.setUser(userTo);
@@ -76,7 +73,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     	transactionTo.setAccount(accountIdTo);
     	transactionTo.setAccountId(accountIdTo.getId());
     	transactionTo.setAmount(amount);
-    	transactionTo.setTransactionType("Transfer to: " + accountIdTo.getHiddenAccountNumber());
+    	transactionTo.setTransactionType("Transfer from Account (..." + accountIdFrom.lastFourDigitsAcctNumber() + ")");
     	
     	this.save(transactionFrom);
     	this.save(transactionTo);
