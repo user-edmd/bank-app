@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.edmond.bank.entity.Account;
+import com.edmond.bank.entity.AccountTransfer;
 import com.edmond.bank.entity.Transactions;
 import com.edmond.bank.entity.User;
 import com.edmond.bank.service.AccountService;
@@ -135,6 +136,22 @@ public class BankController {
 		account.setUser(user);
 		transactionsService.save(transactions);
 		return "create-transaction-success";
+	}
+	
+	@GetMapping("/user/{userId}/create-transfer")
+	public String createTransfer(@PathVariable("userId") int userId, Model theModel) {
+		User user = userService.findById(userId);
+		theModel.addAttribute("userAccounts", user.getAccountList());
+		theModel.addAttribute("accountTransfer", new AccountTransfer());
+		return "create-transfer";
+	}
+	
+	@PostMapping("/user/{userId}/create-transfer")
+	public String createTransfer(@ModelAttribute("accountTransfer") AccountTransfer accountTransfer) {
+		System.out.println("Account ID from: " + accountTransfer.getAccountIdFrom());
+		System.out.println("Account ID to: " + accountTransfer.getAccountIdTo());
+		System.out.println("Amount to Transfer: " + accountTransfer.getAmountToTransfer());
+		return "create-transfer";
 	}
 
 
