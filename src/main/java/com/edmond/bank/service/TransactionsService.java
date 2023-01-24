@@ -6,17 +6,17 @@ import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
 
 public interface TransactionsService {
-	
+
 	public List<Transactions> findAll();
-	
+
 	public Transactions findById(int theId);
-	
+
 	public void save(Transactions transactions);
-	
+
 	public void deleteById(int theId);
-	
+
 	public Double findTotalByAccountId(int accountId);
-	
+
 	public void transferBetweenAccounts(Account accountIdTo, Account accountIdFrom, Double amount);
 
 }

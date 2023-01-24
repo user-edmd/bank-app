@@ -22,13 +22,12 @@ public class BankController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private TransactionsService transactionsService;
-	
 
 	@GetMapping("/")
 	public String home(Model theModel) {
@@ -44,14 +43,14 @@ public class BankController {
 		theModel.addAttribute("userAccounts", userTest.getAccountList());
 		return "user";
 	}
-	
+
 	@GetMapping("/user/{userId}/edit")
 	public String editUser(@PathVariable("userId") int userId, Model theModel) {
 		User userTest = userService.findById(userId);
 		theModel.addAttribute("user", userTest);
 		return "edit-user";
 	}
-	
+
 	@PostMapping("/user/{userId}/edit")
 	public String editUserSuccess(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
 		User tempUser = userService.findById(userId);
@@ -63,43 +62,43 @@ public class BankController {
 		userService.save(tempUser);
 		return "edit-user-success";
 	}
-	
+
 	@GetMapping("/user/{userId}/delete")
 	public String deleteUser(@PathVariable("userId") int userId, Model theModel) {
 		User userTest = userService.findById(userId);
 		theModel.addAttribute("user", userTest);
 		return "delete-user";
 	}
-	
+
 	@PostMapping("/user/{userId}/delete")
 	public String deleteUserSuccess(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
 		userService.deleteById(userId);
 		return "delete-user-success";
 	}
-	
+
 	@GetMapping("/user/{userId}/account/{accountId}")
-	public String retrieveAccount(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,Model theModel) {
+	public String retrieveAccount(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,
+			Model theModel) {
 		Account accountTest = accountService.findById(accountId);
 		theModel.addAttribute("account", accountTest);
 		theModel.addAttribute("transactions", accountTest.getTransactionsList());
 		theModel.addAttribute("transactionsBalance", transactionsService.findTotalByAccountId(accountId));
 		return "account";
 	}
-	
-	
+
 	@GetMapping("/create-user")
 	public String createUser(Model theModel) {
 		User user = new User();
 		theModel.addAttribute("user", user);
 		return "create-user";
 	}
-	
+
 	@PostMapping("/create-user")
 	public String createUserSuccess(@ModelAttribute("user") User user) {
-	    userService.save(user);
-	    return "create-user-success";
+		userService.save(user);
+		return "create-user-success";
 	}
-	
+
 	@GetMapping("/user/{userId}/create-account")
 	public String createAccount(@PathVariable("userId") int userId, Model theModel) {
 		User user = userService.findById(userId);
@@ -108,7 +107,7 @@ public class BankController {
 		theModel.addAttribute("account", account);
 		return "create-account";
 	}
-	
+
 	@PostMapping("/user/{userId}/create-account")
 	public String createAccountSuccess(@PathVariable("userId") int userId, @ModelAttribute("account") Account account) {
 		User user = userService.findById(userId);
@@ -116,9 +115,10 @@ public class BankController {
 		accountService.save(account);
 		return "create-account-success";
 	}
-	
+
 	@GetMapping("/user/{userId}/account/{accountId}/create-transaction")
-	public String createTransaction(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId, Model theModel) {
+	public String createTransaction(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,
+			Model theModel) {
 		User user = userService.findById(userId);
 		Account account = accountService.findById(accountId);
 		Transactions transactions = new Transactions();
@@ -127,9 +127,10 @@ public class BankController {
 		theModel.addAttribute("transactions", transactions);
 		return "create-transaction";
 	}
-	
+
 	@PostMapping("/user/{userId}/account/{accountId}/create-transaction")
-	public String createTransactionSuccess(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId, @ModelAttribute("transactions") Transactions transactions) {
+	public String createTransactionSuccess(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,
+			@ModelAttribute("transactions") Transactions transactions) {
 		User user = userService.findById(userId);
 		Account account = accountService.findById(accountId);
 		transactions.setAccount(account);
@@ -137,7 +138,7 @@ public class BankController {
 		transactionsService.save(transactions);
 		return "create-transaction-success";
 	}
-	
+
 	@GetMapping("/user/{userId}/create-transfer")
 	public String createTransfer(@PathVariable("userId") int userId, Model theModel) {
 		User user = userService.findById(userId);
@@ -145,12 +146,12 @@ public class BankController {
 		theModel.addAttribute("accountTransfer", new AccountTransfer());
 		return "create-transfer";
 	}
-	
+
 	@PostMapping("/user/{userId}/create-transfer")
 	public String createTransfer(@ModelAttribute("accountTransfer") AccountTransfer accountTransfer) {
-		transactionsService.transferBetweenAccounts(accountService.findById(accountTransfer.getAccountIdFrom()), accountService.findById(accountTransfer.getAccountIdTo()), accountTransfer.getAmountToTransfer());
+		transactionsService.transferBetweenAccounts(accountService.findById(accountTransfer.getAccountIdFrom()),
+				accountService.findById(accountTransfer.getAccountIdTo()), accountTransfer.getAmountToTransfer());
 		return "create-transfer";
 	}
-
 
 }

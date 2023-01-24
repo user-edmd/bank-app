@@ -14,27 +14,28 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-	public List<User> findAll() { return userRepository.findAll(); }
-    
-	public User findById(int theId) {
-        Optional<User> result = userRepository.findById(theId);
-        User user = null;
-        if (result.isPresent()) {
-        	user = result.get();
-        } else {
-            throw new RuntimeException("Did not find user id");
-        }
-        return user;
-    }
 
-    
-    public void save(User theUser) {
-    	userRepository.save(theUser);
-    }
-    
-    public void deleteById(int theId) {
-    	userRepository.deleteById(theId);
-    }
-   
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
+	public User findById(int theId) {
+		Optional<User> result = userRepository.findById(theId);
+		User user = null;
+		if (result.isPresent()) {
+			user = result.get();
+		} else {
+			throw new RuntimeException("Did not find user id");
+		}
+		return user;
+	}
+
+	public void save(User theUser) {
+		userRepository.save(theUser);
+	}
+
+	public void deleteById(int theId) {
+		userRepository.deleteById(theId);
+	}
+
 }
