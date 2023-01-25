@@ -14,30 +14,29 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="account")
+@Table(name = "account")
 public class Account {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="account_type")
+
+	@Column(name = "account_type")
 	private String accountType;
-	
-	@Column(name="account_number")
+
+	@Column(name = "account_number")
 	private String accountNumber;
-	
-	@Column(name="User_id", insertable=false, updatable=false)
+
+	@Column(name = "User_id", insertable = false, updatable = false)
 	private int userId;
 
-	public String getHiddenAccountNumber() {
+	public String lastFourDigitsAcctNumber() {
 		accountNumber = this.getAccountNumber();
-		
-		return "(..." + accountNumber.substring(12, 16) + ")";
-		
+		return accountNumber.substring(12, 16);
+
 	}
-	
+
 	public Double getAccountBalance() {
 		double accountBalance = 0.0;
 		for (Transactions transaction : transactionsList) {
@@ -45,14 +44,15 @@ public class Account {
 		}
 		return accountBalance;
 	}
-	
-    @ManyToOne
-    @JoinColumn(name="User_id", nullable=false)
-    private User user;
-    
-	@OneToMany(mappedBy="account")
+
+	@ManyToOne
+	@JoinColumn(name = "User_id", nullable = false)
+	private User user;
+
+	@OneToMany(mappedBy = "account")
 	List<Transactions> transactionsList;
-	
-	public Account() { }
+
+	public Account() {
+	}
 
 }

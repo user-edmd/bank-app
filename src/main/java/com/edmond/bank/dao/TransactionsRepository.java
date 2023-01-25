@@ -9,7 +9,7 @@ import com.edmond.bank.entity.Transactions;
 
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transactions, Integer> {
-	
+
 	@Query(value = "SELECT SUM(m.amount) FROM transactions m WHERE Account_id = :accountId", nativeQuery = true)
 	Double findTotalByAccountId(@Param("accountId") int accountId);
 

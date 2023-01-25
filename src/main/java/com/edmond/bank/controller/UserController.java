@@ -14,10 +14,10 @@ import com.edmond.bank.service.UserService;
 @Controller
 @RequestMapping("/users")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/list")
 	public String listUsers(Model theModel) {
 		List<User> theUsers = userService.findAll();

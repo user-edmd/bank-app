@@ -10,35 +10,33 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-
 @Data
 @Entity
-@Table(name="transactions")
+@Table(name = "transactions")
 public class Transactions {
 
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="transaction_type")
+
+	@Column(name = "transaction_type")
 	private String transactionType;
-	
-	@Column(name="amount")
+
+	@Column(name = "amount")
 	private Double amount;
-	
-	@Column(name="date")
+
+	@Column(name = "date")
 	private String date;
-	
-	@Column(name="Account_id", insertable=false, updatable=false)
+
+	@Column(name = "Account_id", insertable = false, updatable = false)
 	private int accountId;
-	
-    @ManyToOne
-    @JoinColumn(name="Account_id", nullable=false)
-    private Account account;
-    
-	public Transactions() { }
-   
-		
+
+	@ManyToOne
+	@JoinColumn(name = "Account_id", nullable = false)
+	private Account account;
+
+	public Transactions() {
+	}
+
 }

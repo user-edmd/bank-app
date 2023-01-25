@@ -14,10 +14,10 @@ import com.edmond.bank.service.TransactionsService;
 @Controller
 @RequestMapping("/transactions")
 public class TransactionsController {
-	
+
 	@Autowired
 	private TransactionsService transactionsService;
-	
+
 	@GetMapping("/list")
 	public String listUsers(Model theModel) {
 		List<Transactions> theTransactions = transactionsService.findAll();
