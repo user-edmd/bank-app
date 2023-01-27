@@ -60,7 +60,7 @@ public class BankController {
 		tempUser.setDob(user.getDob());
 		tempUser.setSsn(user.getSsn());
 		userService.save(tempUser);
-		return "edit-user-success";
+		return "redirect:/user/" + userId;
 	}
 
 	@GetMapping("/user/{userId}/delete")
@@ -142,6 +142,7 @@ public class BankController {
 	@GetMapping("/user/{userId}/create-transfer")
 	public String createTransfer(@PathVariable("userId") int userId, Model theModel) {
 		User user = userService.findById(userId);
+		theModel.addAttribute("user", user);
 		theModel.addAttribute("userAccounts", user.getAccountList());
 		theModel.addAttribute("accountTransfer", new AccountTransfer());
 		return "create-transfer";

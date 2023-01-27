@@ -41,6 +41,8 @@
 					type="text" th:field="*{amountToTransfer}" class="form-control">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
+			<a th:href="@{/user/{userId} (userId=${user.id})}"
+			   class="btn btn-outline-danger"><i class="bi bi-arrow-return-left"></i> Cancel</a>
 		</form>
 	</div>
 </body>
