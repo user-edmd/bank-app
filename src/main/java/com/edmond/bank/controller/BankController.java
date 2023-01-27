@@ -96,7 +96,7 @@ public class BankController {
 	@PostMapping("/create-user")
 	public String createUserSuccess(@ModelAttribute("user") User user) {
 		userService.save(user);
-		return "create-user-success";
+		return "redirect:/";
 	}
 
 	@GetMapping("/user/{userId}/create-account")
@@ -113,7 +113,7 @@ public class BankController {
 		User user = userService.findById(userId);
 		account.setUser(user);
 		accountService.save(account);
-		return "create-account-success";
+		return "redirect:/user/" + userId;
 	}
 
 	@GetMapping("/user/{userId}/account/{accountId}/create-transaction")
@@ -136,7 +136,7 @@ public class BankController {
 		transactions.setAccount(account);
 		account.setUser(user);
 		transactionsService.save(transactions);
-		return "create-transaction-success";
+		return "redirect:/user/" + userId + "/account/" + accountId;
 	}
 
 	@GetMapping("/user/{userId}/create-transfer")

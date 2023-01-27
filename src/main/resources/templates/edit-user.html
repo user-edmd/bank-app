@@ -40,6 +40,8 @@
 					th:field="*{ssn}" class="form-control" placeholder="xxx-xx-xxxx">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
+			<a th:href="@{/user/{userId} (userId=${user.id})}"
+			   class="btn btn-outline-danger"><i class="bi bi-arrow-return-left"></i> Cancel</a>
 		</form>
 	</div>
 </body>
