@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.edmond.bank.entity.Account;
-import com.edmond.bank.entity.AccountTransfer;
+import com.edmond.bank.model.AccountTransfer;
 import com.edmond.bank.entity.Transactions;
 import com.edmond.bank.entity.User;
 import com.edmond.bank.service.AccountService;

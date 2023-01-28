@@ -1,4 +1,4 @@
-package com.edmond.bank.entity;
+package com.edmond.bank.model;
 
 import lombok.Data;
 
