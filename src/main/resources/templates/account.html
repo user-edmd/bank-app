@@ -34,9 +34,13 @@
 				</tr>
 			</tbody>
 		</table>
-		<div>
+		<div class="mb-3">
 			<a th:href="@{/user/{userId}/account/{accountId}/create-transaction (userId=${account.getUserId}, accountId=${account.id})}"
 				class="btn btn-success"><i class="bi bi-arrow-down-up"></i> Add Transaction</a>
+		</div>
+		<div class="mb-3">
+			<a th:href="@{/user/{userId} (userId=${account.getUserId})}"
+			   class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-return-left"></i> Back</a>
 		</div>
 	</div>
 </body>

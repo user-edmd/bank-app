@@ -60,7 +60,7 @@ public class BankController {
 		tempUser.setDob(user.getDob());
 		tempUser.setSsn(user.getSsn());
 		userService.save(tempUser);
-		return "edit-user-success";
+		return "redirect:/user/" + userId;
 	}
 
 	@GetMapping("/user/{userId}/delete")
@@ -73,7 +73,7 @@ public class BankController {
 	@PostMapping("/user/{userId}/delete")
 	public String deleteUserSuccess(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
 		userService.deleteById(userId);
-		return "delete-user-success";
+		return "redirect:/";
 	}
 
 	@GetMapping("/user/{userId}/account/{accountId}")
@@ -96,7 +96,7 @@ public class BankController {
 	@PostMapping("/create-user")
 	public String createUserSuccess(@ModelAttribute("user") User user) {
 		userService.save(user);
-		return "create-user-success";
+		return "redirect:/";
 	}
 
 	@GetMapping("/user/{userId}/create-account")
@@ -113,7 +113,7 @@ public class BankController {
 		User user = userService.findById(userId);
 		account.setUser(user);
 		accountService.save(account);
-		return "create-account-success";
+		return "redirect:/user/" + userId;
 	}
 
 	@GetMapping("/user/{userId}/account/{accountId}/create-transaction")
@@ -136,22 +136,23 @@ public class BankController {
 		transactions.setAccount(account);
 		account.setUser(user);
 		transactionsService.save(transactions);
-		return "create-transaction-success";
+		return "redirect:/user/" + userId + "/account/" + accountId;
 	}
 
 	@GetMapping("/user/{userId}/create-transfer")
 	public String createTransfer(@PathVariable("userId") int userId, Model theModel) {
 		User user = userService.findById(userId);
+		theModel.addAttribute("user", user);
 		theModel.addAttribute("userAccounts", user.getAccountList());
 		theModel.addAttribute("accountTransfer", new AccountTransfer());
 		return "create-transfer";
 	}
 
 	@PostMapping("/user/{userId}/create-transfer")
-	public String createTransfer(@ModelAttribute("accountTransfer") AccountTransfer accountTransfer) {
+	public String createTransfer(@PathVariable("userId") int userId, @ModelAttribute("accountTransfer") AccountTransfer accountTransfer) {
 		transactionsService.transferBetweenAccounts(accountService.findById(accountTransfer.getAccountIdFrom()),
 				accountService.findById(accountTransfer.getAccountIdTo()), accountTransfer.getAmountToTransfer());
-		return "create-transfer";
+		return "redirect:/user/" + userId;
 	}
 
 }

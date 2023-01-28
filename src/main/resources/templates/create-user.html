@@ -35,14 +35,16 @@
 					th:field="*{address}" class="form-control">
 			</div>
 			<div class="mb-3">
-				<label class="form-label">Date of Birth</label> <input type="text"
-					th:field="*{dob}" class="form-control" placeholder="yyyy-mm-dd">
+				<label class="form-label">Date of Birth</label> <input type="date"
+					   min="1900-01-01" th:field="*{dob}" class="form-control">
 			</div>
 			<div class="mb-3">
 				<label class="form-label">SSN</label> <input type="text"
 					th:field="*{ssn}" class="form-control" placeholder="xxx-xx-xxxx">
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
+			<a th:href="@{/}"
+			   class="btn btn-outline-danger"><i class="bi bi-arrow-return-left"></i> Cancel</a>
 		</form>
 	</div>
 </body>
