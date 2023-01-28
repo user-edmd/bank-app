@@ -149,10 +149,10 @@ public class BankController {
 	}
 
 	@PostMapping("/user/{userId}/create-transfer")
-	public String createTransfer(@ModelAttribute("accountTransfer") AccountTransfer accountTransfer) {
+	public String createTransfer(@PathVariable("userId") int userId, @ModelAttribute("accountTransfer") AccountTransfer accountTransfer) {
 		transactionsService.transferBetweenAccounts(accountService.findById(accountTransfer.getAccountIdFrom()),
 				accountService.findById(accountTransfer.getAccountIdTo()), accountTransfer.getAmountToTransfer());
-		return "create-transfer";
+		return "redirect:/user/" + userId;
 	}
 
 }
