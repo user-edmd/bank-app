@@ -73,7 +73,7 @@ public class BankController {
 	@PostMapping("/user/{userId}/delete")
 	public String deleteUserSuccess(@ModelAttribute("user") User user, @PathVariable("userId") int userId) {
 		userService.deleteById(userId);
-		return "delete-user-success";
+		return "redirect:/";
 	}
 
 	@GetMapping("/user/{userId}/account/{accountId}")
