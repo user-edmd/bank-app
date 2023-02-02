@@ -37,7 +37,7 @@ public class TransactionsServiceImpl implements TransactionsService {
 	}
 
 	public void save(Transactions theTransactions) {
-		if (theTransactions.getTransactionType().equalsIgnoreCase("withdraw")) {
+		if ("withdraw".equals(theTransactions.getTransactionType())) {
 			if (theTransactions.getAccount().getAccountBalance() < theTransactions.getAmount()) {
 				throw new RuntimeException("Not enough balance in account to withdraw.");
 			}
@@ -60,6 +60,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 	}
 
 	public void transferBetweenAccounts(Account accountIdFrom, Account accountIdTo, Double amount) {
+		if (accountIdFrom.getId() == accountIdTo.getId())
+			throw new RuntimeException("Cannot transfer to same account");
+
 		User userFrom = userService.findById(accountIdFrom.getUserId());
 		accountIdFrom.setUser(userFrom);
 		Transactions transactionFrom = new Transactions();
