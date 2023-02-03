@@ -25,27 +25,53 @@
 			<div class="mb-3">
 				<label class="form-label">First Name</label> <input type="text"
 					th:field="*{firstName}" class="form-control">
+				<p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Last Name</label> <input type="text"
 					th:field="*{lastName}" class="form-control">
+				<p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Address</label> <input type="text"
 					th:field="*{address}" class="form-control">
+				<p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Date of Birth</label> <input type="date"
-					   min="1900-01-01" th:field="*{dob}" class="form-control">
+					   min="1900-01-01" th:field="*{dob}" class="form-control" required>
+				<p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{dob}"></p>
 			</div>
 			<div class="mb-3">
-				<label class="form-label">SSN</label> <input type="text"
-					th:field="*{ssn}" class="form-control" placeholder="xxx-xx-xxxx">
+				<label class="form-label">SSN</label> <input type="text" onkeydown="ssnFormatter()" id="ssn"
+					th:field="*{ssn}" class="form-control" placeholder="xxx-xx-xxxx" required>
+				<p th:if="${#fields.hasErrors('ssn')}" th:errorclass="error" th:errors="*{ssn}"></p>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<a th:href="@{/}"
 			   class="btn btn-outline-danger"><i class="bi bi-arrow-return-left"></i> Cancel</a>
 		</form>
 	</div>
+	<script>
+      function formatSSN(value) {
+        if (!value) return value;
+        const ssn = value.replace(/[^\d]/g, '');
+        const ssnLength = ssn.length;
+
+        if (ssnLength < 4) return ssn;
+
+        if (ssnLength < 6) {
+          return `${ssn.slice(0, 3)}-${ssn.slice(3)}`;
+        }
+
+        return `${ssn.slice(0, 3)}-${ssn.slice(3, 5)}-${ssn.slice(5, 8)}`;
+      }
+
+      function ssnFormatter() {
+        const inputField = document.getElementById('ssn');
+        const formattedInputValue = formatSSN(inputField.value);
+        inputField.value = formattedInputValue;
+      }
+    </script>
 </body>
 </html>
