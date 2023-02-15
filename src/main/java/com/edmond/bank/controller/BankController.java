@@ -114,8 +114,14 @@ public class BankController {
 	}
 
 	@PostMapping("/user/{userId}/create-account")
-	public String createAccountSuccess(@PathVariable("userId") int userId, @ModelAttribute("account") Account account) {
+	public String createAccountSuccess(@PathVariable("userId") int userId, @Valid @ModelAttribute("account") Account account,
+									   BindingResult result, Model theModel) {
 		User user = userService.findById(userId);
+		theModel.addAttribute("user", user);
+		if (result.hasErrors()) {
+			return "create-account";
+		}
+
 		account.setUser(user);
 		accountService.save(account);
 		return "redirect:/user/" + userId;
