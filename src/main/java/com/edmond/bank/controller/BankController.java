@@ -2,9 +2,11 @@ package com.edmond.bank.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -94,7 +96,10 @@ public class BankController {
 	}
 
 	@PostMapping("/create-user")
-	public String createUserSuccess(@ModelAttribute("user") User user) {
+	public String createUserSuccess(@Valid @ModelAttribute("user") User user, BindingResult result) {
+		if (result.hasErrors()) {
+			return "create-user";
+		}
 		userService.save(user);
 		return "redirect:/";
 	}
@@ -109,8 +114,14 @@ public class BankController {
 	}
 
 	@PostMapping("/user/{userId}/create-account")
-	public String createAccountSuccess(@PathVariable("userId") int userId, @ModelAttribute("account") Account account) {
+	public String createAccountSuccess(@PathVariable("userId") int userId, @Valid @ModelAttribute("account") Account account,
+									   BindingResult result, Model theModel) {
 		User user = userService.findById(userId);
+		theModel.addAttribute("user", user);
+		if (result.hasErrors()) {
+			return "create-account";
+		}
+
 		account.setUser(user);
 		accountService.save(account);
 		return "redirect:/user/" + userId;

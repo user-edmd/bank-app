@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
@@ -22,6 +23,7 @@ public class Account {
 	@Column(name = "id")
 	private int id;
 
+	@NotEmpty(message = "Must select an Account Type")
 	@Column(name = "account_type")
 	private String accountType;
 

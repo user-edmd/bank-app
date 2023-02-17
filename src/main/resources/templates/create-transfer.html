@@ -38,7 +38,7 @@
 			</select>
 			<div class="mb-3">
 				<label class="form-label">Amount to Transfer:</label> <input
-					type="text" th:field="*{amountToTransfer}" class="form-control">
+					type="text" th:field="*{amountToTransfer}" class="form-control" required>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<a th:href="@{/user/{userId} (userId=${user.id})}"
