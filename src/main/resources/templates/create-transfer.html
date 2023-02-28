@@ -4,7 +4,7 @@
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<script src="https://code.jquery.com/jquery.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -37,13 +37,33 @@
 					th:text="${userAccount.accountType} + ' (...' + ${userAccount.lastFourDigitsAcctNumber} + ' )'"></option>
 			</select>
 			<div class="mb-3">
-				<label class="form-label">Amount to Transfer:</label> <input
+				<label class="form-label">Amount to Transfer:</label> <input id="amount"
 					type="text" th:field="*{amountToTransfer}" class="form-control" required>
+			</div>
+			<div id="amount-error" style="display: none;color:red;">
+				Invalid amount entered
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<a th:href="@{/user/{userId} (userId=${user.id})}"
 			   class="btn btn-outline-danger"><i class="bi bi-arrow-return-left"></i> Cancel</a>
 		</form>
 	</div>
+<script>
+	$( "#amount" ).change(function () {
+  if (!$.isNumeric($(this).val())) {
+    $(this).val('0').trigger('change');
+    $("#amount-error").show();
+  } else {
+      $("#amount-error").hide();
+  }
+
+
+  var inputValue = $(this).val();
+  var parsed = parseFloat(inputValue);
+  var parsedFixed = parsed.toFixed(2)
+  var parsedReplace = parsedFixed.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+  $(this).val(parsedReplace);
+});
+</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.edmond.bank.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.edmond.bank.model.TransactionsForm;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private AccountService accountService;
 
 	public List<Transactions> findAll() {
 		return transactionsRepository.findAll();
@@ -81,5 +85,17 @@ public class TransactionsServiceImpl implements TransactionsService {
 
 		this.save(transactionFrom);
 		this.save(transactionTo);
+	}
+
+	public void createTransaction(int accountId, int userId, TransactionsForm transactionsForm) {
+		User user = userService.findById(userId);
+		Account account = accountService.findById(accountId);
+
+		Transactions transaction = new Transactions();
+		transaction.setAmount(Double.parseDouble(transactionsForm.getAmount().replaceAll(",","")));
+		transaction.setTransactionType(transactionsForm.getTransactionType());
+		transaction.setAccount(account);
+		account.setUser(user);
+		save(transaction);
 	}
 }

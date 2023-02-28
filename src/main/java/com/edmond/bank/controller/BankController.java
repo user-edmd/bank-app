@@ -2,6 +2,7 @@ package com.edmond.bank.controller;
 
 import java.util.List;
 
+import com.edmond.bank.model.TransactionsForm;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -141,12 +142,8 @@ public class BankController {
 
 	@PostMapping("/user/{userId}/account/{accountId}/create-transaction")
 	public String createTransactionSuccess(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,
-			@ModelAttribute("transactions") Transactions transactions) {
-		User user = userService.findById(userId);
-		Account account = accountService.findById(accountId);
-		transactions.setAccount(account);
-		account.setUser(user);
-		transactionsService.save(transactions);
+			@ModelAttribute("transactions") TransactionsForm transactionsForm) {
+		transactionsService.createTransaction(accountId, userId, transactionsForm);
 		return "redirect:/user/" + userId + "/account/" + accountId;
 	}
 
