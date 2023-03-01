@@ -37,8 +37,6 @@ public class User {
 	@NotEmpty(message = "Address cannot be empty.")
 	@Column(name = "address")
 	private String address;
-
-	@Pattern(message = "Invalid SSN", regexp = "^(0$|[^0]\\d{0,19}$)")
 	@NotEmpty(message = "SSN cannot be empty.")
 	@Column(name = "ssn")
 	private String ssn;

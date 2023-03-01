@@ -92,6 +92,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 		Account account = accountService.findById(accountId);
 
 		Transactions transaction = new Transactions();
+		if (Double.parseDouble(transactionsForm.getAmount().replaceAll(",","")) <= 0)
+			throw new RuntimeException("Amount must be greater than $0.00");
 		transaction.setAmount(Double.parseDouble(transactionsForm.getAmount().replaceAll(",","")));
 		transaction.setTransactionType(transactionsForm.getTransactionType());
 		transaction.setAccount(account);

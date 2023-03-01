@@ -3,6 +3,8 @@ package com.edmond.bank.service;
 import java.util.List;
 
 import com.edmond.bank.entity.Account;
+import com.edmond.bank.entity.User;
+import com.edmond.bank.model.AccountForm;
 
 public interface AccountService {
 
@@ -13,5 +15,7 @@ public interface AccountService {
 	public void save(Account theAccount);
 
 	public void deleteById(int theId);
+
+	public void createAccount(int userId, AccountForm accountForm);
 
 }

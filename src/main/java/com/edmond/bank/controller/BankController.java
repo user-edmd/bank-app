@@ -2,7 +2,9 @@ package com.edmond.bank.controller;
 
 import java.util.List;
 
+import com.edmond.bank.model.AccountForm;
 import com.edmond.bank.model.TransactionsForm;
+import com.edmond.bank.model.UserForm;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,24 +35,24 @@ public class BankController {
 	private TransactionsService transactionsService;
 
 	@GetMapping("/")
-	public String home(Model theModel) {
+	public String home(Model model) {
 		List<User> allUsers = userService.findAll();
-		theModel.addAttribute("options", allUsers);
+		model.addAttribute("options", allUsers);
 		return "index";
 	}
 
 	@GetMapping("/user/{userId}")
-	public String retrieveUser(@PathVariable("userId") int userId, Model theModel) {
-		User userTest = userService.findById(userId);
-		theModel.addAttribute("user", userTest);
-		theModel.addAttribute("userAccounts", userTest.getAccountList());
+	public String retrieveUser(@PathVariable("userId") int userId, Model model) {
+		User user = userService.findById(userId);
+		model.addAttribute("user", user);
+		model.addAttribute("userAccounts", user.getAccountList());
 		return "user";
 	}
 
 	@GetMapping("/user/{userId}/edit")
-	public String editUser(@PathVariable("userId") int userId, Model theModel) {
-		User userTest = userService.findById(userId);
-		theModel.addAttribute("user", userTest);
+	public String editUser(@PathVariable("userId") int userId, Model model) {
+		User user = userService.findById(userId);
+		model.addAttribute("user", user);
 		return "edit-user";
 	}
 
@@ -67,9 +69,9 @@ public class BankController {
 	}
 
 	@GetMapping("/user/{userId}/delete")
-	public String deleteUser(@PathVariable("userId") int userId, Model theModel) {
-		User userTest = userService.findById(userId);
-		theModel.addAttribute("user", userTest);
+	public String deleteUser(@PathVariable("userId") int userId, Model model) {
+		User user = userService.findById(userId);
+		model.addAttribute("user", user);
 		return "delete-user";
 	}
 
@@ -81,62 +83,59 @@ public class BankController {
 
 	@GetMapping("/user/{userId}/account/{accountId}")
 	public String retrieveAccount(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,
-			Model theModel) {
-		Account accountTest = accountService.findById(accountId);
-		theModel.addAttribute("account", accountTest);
-		theModel.addAttribute("transactions", accountTest.getTransactionsList());
-		theModel.addAttribute("transactionsBalance", transactionsService.findTotalByAccountId(accountId));
+			Model model) {
+		Account account = accountService.findById(accountId);
+		model.addAttribute("account", account);
+		model.addAttribute("transactions", account.getTransactionsList());
+		model.addAttribute("transactionsBalance", transactionsService.findTotalByAccountId(accountId));
 		return "account";
 	}
 
 	@GetMapping("/create-user")
-	public String createUser(Model theModel) {
+	public String createUser(Model model) {
 		User user = new User();
-		theModel.addAttribute("user", user);
+		model.addAttribute("user", user);
 		return "create-user";
 	}
 
 	@PostMapping("/create-user")
-	public String createUserSuccess(@Valid @ModelAttribute("user") User user, BindingResult result) {
+	public String createUserSuccess(@Valid @ModelAttribute("user") UserForm userForm, BindingResult result) {
 		if (result.hasErrors()) {
 			return "create-user";
 		}
-		userService.save(user);
+		userService.createUser(userForm);
 		return "redirect:/";
 	}
 
 	@GetMapping("/user/{userId}/create-account")
-	public String createAccount(@PathVariable("userId") int userId, Model theModel) {
+	public String createAccount(@PathVariable("userId") int userId, Model model) {
 		User user = userService.findById(userId);
 		Account account = new Account();
-		theModel.addAttribute("user", user);
-		theModel.addAttribute("account", account);
+		model.addAttribute("user", user);
+		model.addAttribute("account", account);
 		return "create-account";
 	}
 
 	@PostMapping("/user/{userId}/create-account")
-	public String createAccountSuccess(@PathVariable("userId") int userId, @Valid @ModelAttribute("account") Account account,
-									   BindingResult result, Model theModel) {
-		User user = userService.findById(userId);
-		theModel.addAttribute("user", user);
+	public String createAccountSuccess(@PathVariable("userId") int userId, @Valid @ModelAttribute("account") AccountForm accountForm,
+									   BindingResult result) {
+
 		if (result.hasErrors()) {
 			return "create-account";
 		}
-
-		account.setUser(user);
-		accountService.save(account);
+		accountService.createAccount(userId, accountForm);
 		return "redirect:/user/" + userId;
 	}
 
 	@GetMapping("/user/{userId}/account/{accountId}/create-transaction")
 	public String createTransaction(@PathVariable("userId") int userId, @PathVariable("accountId") int accountId,
-			Model theModel) {
+			Model model) {
 		User user = userService.findById(userId);
 		Account account = accountService.findById(accountId);
 		Transactions transactions = new Transactions();
-		theModel.addAttribute("user", user);
-		theModel.addAttribute("account", account);
-		theModel.addAttribute("transactions", transactions);
+		model.addAttribute("user", user);
+		model.addAttribute("account", account);
+		model.addAttribute("transactions", transactions);
 		return "create-transaction";
 	}
 
@@ -148,11 +147,11 @@ public class BankController {
 	}
 
 	@GetMapping("/user/{userId}/create-transfer")
-	public String createTransfer(@PathVariable("userId") int userId, Model theModel) {
+	public String createTransfer(@PathVariable("userId") int userId, Model model) {
 		User user = userService.findById(userId);
-		theModel.addAttribute("user", user);
-		theModel.addAttribute("userAccounts", user.getAccountList());
-		theModel.addAttribute("accountTransfer", new AccountTransfer());
+		model.addAttribute("user", user);
+		model.addAttribute("userAccounts", user.getAccountList());
+		model.addAttribute("accountTransfer", new AccountTransfer());
 		return "create-transfer";
 	}
 
