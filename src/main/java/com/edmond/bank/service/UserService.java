@@ -3,6 +3,7 @@ package com.edmond.bank.service;
 import java.util.List;
 
 import com.edmond.bank.entity.User;
+import com.edmond.bank.model.UserForm;
 
 public interface UserService {
 
@@ -13,5 +14,7 @@ public interface UserService {
 	public void save(User theUser);
 
 	public void deleteById(int theId);
+
+	public void createUser(UserForm userForm);
 
 }
