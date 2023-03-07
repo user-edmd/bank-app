@@ -17,4 +17,8 @@ public interface UserService {
 
 	public void createUser(UserForm userForm);
 
+	public void editUser(int userId, UserForm userForm);
+
+	public User findUserByEmail(String email);
+
 }

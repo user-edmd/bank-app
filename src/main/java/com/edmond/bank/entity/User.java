@@ -12,8 +12,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -45,7 +43,12 @@ public class User {
 	@NotBlank(message = "Date of Birth cannot be empty.")
 	@Column(name = "dob")
 	private String dob;
-
+	@Column(name = "username")
+	private String username;
+	@Column(name = "password")
+	private String password;
+	@Column(name = "role")
+	private String role;
 	@OneToMany(mappedBy = "user")
 	List<Account> accountList;
 

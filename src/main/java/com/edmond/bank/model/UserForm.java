@@ -11,4 +11,6 @@ public class UserForm {
     private String address;
     private String dob;
     private String ssn;
+    private String username;
+    private String password;
 }
