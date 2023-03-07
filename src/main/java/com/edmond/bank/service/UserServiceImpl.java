@@ -41,12 +41,29 @@ public class UserServiceImpl implements UserService {
 
 	public void createUser(UserForm userForm) {
 		User user = new User();
+		user.setUsername(userForm.getUsername());
+		user.setPassword(userForm.getPassword());
 		user.setFirstName(userForm.getFirstName());
 		user.setLastName(userForm.getLastName());
 		user.setAddress(userForm.getAddress());
 		user.setDob(userForm.getDob());
 		user.setSsn(userForm.getSsn());
 		save(user);
+	}
+	public void editUser(int userId, UserForm userForm) {
+		User user = findById(userId);
+		user.setUsername(userForm.getUsername());
+		user.setPassword(userForm.getPassword());
+		user.setFirstName(userForm.getFirstName());
+		user.setLastName(userForm.getLastName());
+		user.setAddress(userForm.getAddress());
+		user.setDob(userForm.getDob());
+		user.setSsn(userForm.getSsn());
+		save(user);
+	}
+
+	public User findUserByEmail(String email) {
+		return userRepository.findByUsername(email);
 	}
 
 }
