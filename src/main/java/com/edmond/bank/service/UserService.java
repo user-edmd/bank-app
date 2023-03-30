@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.edmond.bank.entity.User;
 import com.edmond.bank.model.UserForm;
+import org.springframework.stereotype.Service;
 
 public interface UserService {
 

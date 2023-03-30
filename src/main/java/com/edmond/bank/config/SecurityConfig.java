@@ -1,5 +1,6 @@
 package com.edmond.bank.config;
 
+import com.edmond.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,21 +32,21 @@ public class SecurityConfig {
         daoAuthenticationProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
         return daoAuthenticationProvider;
     }
-//
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
             http.authorizeHttpRequests()
                     .requestMatchers("/")
                     .permitAll()
-                    .requestMatchers("/users/list")
+                    .requestMatchers("/users/list", "/accounts/list", "/transactions/list")
                     .hasAuthority("ADMIN")
                     .anyRequest()
                     .authenticated()
+                    .and()
+                    .formLogin()
+                    .defaultSuccessUrl("/dashboard", true)
+                    .permitAll()
                     .and()
                     .httpBasic();
             return http.build();
