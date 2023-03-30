@@ -25,37 +25,37 @@
 			<div class="mb-3">
 				<label class="form-label">Email</label> <input type="text"
 																	th:field="*{username}" class="form-control" required>
-				<p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>
+<!--				<p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>-->
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Password</label> <input type="text"
 																	th:field="*{password}" class="form-control" required>
-				<p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
+<!--				<p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>-->
 			</div>
 			<div class="mb-3">
 				<label class="form-label">First Name</label> <input type="text"
 					th:field="*{firstName}" class="form-control" required>
-				<p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
+<!--				<p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>-->
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Last Name</label> <input type="text"
 					th:field="*{lastName}" class="form-control" required>
-				<p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
+<!--				<p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>-->
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Address</label> <input type="text"
 					th:field="*{address}" class="form-control" required>
-				<p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
+<!--				<p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>-->
 			</div>
 			<div class="mb-3">
 				<label class="form-label">Date of Birth</label> <input type="date"
 					   min="1900-01-01" th:field="*{dob}" class="form-control" required>
-				<p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{dob}"></p>
+<!--				<p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{dob}"></p>-->
 			</div>
 			<div class="mb-3">
 				<label class="form-label">SSN</label> <input type="text" onkeydown="ssnFormatter()" id="ssn"
 					th:field="*{ssn}" class="form-control" placeholder="xxx-xx-xxxx" required>
-				<p th:if="${#fields.hasErrors('ssn')}" th:errorclass="error" th:errors="*{ssn}"></p>
+<!--				<p th:if="${#fields.hasErrors('ssn')}" th:errorclass="error" th:errors="*{ssn}"></p>-->
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<a th:href="@{/}"

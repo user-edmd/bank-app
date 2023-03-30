@@ -55,4 +55,9 @@ public class AccountServiceImpl implements AccountService {
 		save(account);
 	}
 
+	public boolean userOwnsAccount(int userId, int accountId) {
+
+		return false;
+	}
+
 }
