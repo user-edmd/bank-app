@@ -19,41 +19,44 @@
 </head>
 <body>
 	<div class="container">
-		<h3>
-			<span th:remove="tag">Welcome</span> <span
-				th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
-		</h3>
-		<hr>
-		<table class="table table-bordered table-striped">
-			<thead class="thead-dark">
-				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Address</th>
-					<th></th>
-				</tr>
-			</thead>
+		<div th:insert="~{navbar-logged-in :: navbar-logged-in}">  </div>
+<!--		<h3>-->
+<!--			<span th:remove="tag">Welcome</span> <span-->
+<!--				th:text="${user.firstName} + ' ' + ${user.lastName}"></span>-->
+<!--		</h3>-->
+<!--		<hr>-->
+<!--		<table class="table table-bordered table-striped">-->
+<!--			<thead class="thead-dark">-->
+<!--				<tr>-->
+<!--					<th>First Name</th>-->
+<!--					<th>Last Name</th>-->
+<!--					<th>Address</th>-->
+<!--					<th></th>-->
+<!--				</tr>-->
+<!--			</thead>-->
 
-			<tbody>
-				<tr>
-					<td th:text="${user.firstName}" />
-					<td th:text="${user.lastName}" />
-					<td th:text="${user.address}" />
-					<td><a th:href="@{/user/{userId}/edit (userId=${user.id})}"
-						class="btn btn-secondary btn-sm"><i
-							class="bi bi-pencil-square"></i> Edit</a></td>
-				</tr>
-			</tbody>
+<!--			<tbody>-->
+<!--				<tr>-->
+<!--					<td th:text="${user.firstName}" />-->
+<!--					<td th:text="${user.lastName}" />-->
+<!--					<td th:text="${user.address}" />-->
+<!--					<td><a th:href="@{/user/{userId}/edit (userId=${user.id})}"-->
+<!--						class="btn btn-secondary btn-sm"><i-->
+<!--							class="bi bi-pencil-square"></i> Edit</a></td>-->
+<!--				</tr>-->
+<!--			</tbody>-->
 
-		</table>
-		<div class="mb-3">
-			<a th:href="@{/user/{userId}/create-account (userId=${user.id})}"
-				class="btn btn-success"><i class="bi bi-piggy-bank"></i> Add
-				Account</a> <a
-				th:href="@{/user/{userId}/create-transfer (userId=${user.id})}"
-				class="btn btn-success"><i class="bi bi-arrow-left-right"></i> Create
-				Transfer</a>
-		</div>
+<!--		</table>-->
+<!--		<div class="mb-3">-->
+<!--			<a th:href="@{/user/{userId}/create-account (userId=${user.id})}"-->
+<!--				class="btn btn-success"><i class="bi bi-piggy-bank"></i> Add-->
+<!--				Account</a> <a-->
+<!--				th:href="@{/user/{userId}/create-transfer (userId=${user.id})}"-->
+<!--				class="btn btn-success"><i class="bi bi-arrow-left-right"></i> Create-->
+<!--				Transfer</a>-->
+<!--		</div>-->
+		<p></p>
+		<p></p>
 		<div class="row">
 			<!-- 		  <div class="col-sm-6 mb-3 mb-sm-3" th:each="tempAccounts : ${userAccounts}"> -->
 			<div class="col-sm-3 mb-3 mb-sm-3"
@@ -73,8 +76,6 @@
 				</div>
 			</div>
 		</div>
-		<a th:href="@{/}"
-				class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-return-left"></i> Back</a>
 	</div>
 </body>
 </html>
