@@ -62,12 +62,6 @@ public class UserController {
 		return "edit-user";
 
 	}
-//	@GetMapping("/user/{userId}/edit")
-//	public String editUser(@PathVariable("userId") int userId, Model model) {
-//		User user = userService.findById(userId);
-//		model.addAttribute("user", user);
-//		return "edit-user";
-//	}
 	@PostMapping("/user/{userId}/edit")
 	public String editUserSuccess(@ModelAttribute("user") UserForm userForm, @PathVariable("userId") int userId) {
 		userService.editUser(userId, userForm);

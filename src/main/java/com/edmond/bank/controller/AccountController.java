@@ -72,6 +72,7 @@ public class AccountController {
 		}
 
 		Account account = accountService.findById(accountId);
+		model.addAttribute("user", user);
 		model.addAttribute("account", account);
 		model.addAttribute("transactions", account.getTransactionsList());
 		model.addAttribute("transactionsBalance", transactionsService.findTotalByAccountId(accountId));

@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @EnableWebSecurity
@@ -37,7 +38,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
             http.authorizeHttpRequests()
-                    .requestMatchers("/")
+                    .requestMatchers("/","/create-user")
                     .permitAll()
                     .requestMatchers("/users/list", "/accounts/list", "/transactions/list")
                     .hasAuthority("ADMIN")
@@ -47,6 +48,10 @@ public class SecurityConfig {
                     .formLogin()
                     .defaultSuccessUrl("/dashboard", true)
                     .permitAll()
+                    .and()
+                    .logout()
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
                     .and()
                     .httpBasic();
             return http.build();
