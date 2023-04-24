@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
+@RequestMapping("/user")
 public class UserAPIController {
 
     @Autowired
