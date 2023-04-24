@@ -32,4 +32,9 @@ public class UserAPIController {
         return user;
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteById(id);
+    }
+
 }

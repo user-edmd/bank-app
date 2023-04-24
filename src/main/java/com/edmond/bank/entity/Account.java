@@ -49,7 +49,7 @@ public class Account {
 	@JsonIgnore
 	private User user;
 
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	List<Transactions> transactionsList;
 
 	public Account() {
