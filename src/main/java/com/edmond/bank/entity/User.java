@@ -49,8 +49,8 @@ public class User {
 	private String password;
 	@Column(name = "role")
 	private String role;
-	@OneToMany(mappedBy = "user")
-	List<Account> accountList;
+//	@OneToMany(mappedBy = "user")
+//	List<Account> accountList;
 
 	public User() {
 	}
