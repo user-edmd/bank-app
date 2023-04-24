@@ -15,8 +15,6 @@ public class UserAPIController {
     @Autowired
     UserService userService;
 
-    ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
-
     @GetMapping("/{id}")
     public User getUser(@PathVariable int id) {
         return userService.findById(id);

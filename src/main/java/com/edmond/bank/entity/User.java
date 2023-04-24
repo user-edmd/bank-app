@@ -3,6 +3,7 @@ package com.edmond.bank.entity;
 import java.util.List;
 
 import com.edmond.bank.validation.BirthDateValidator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,8 +50,9 @@ public class User {
 	private String password;
 	@Column(name = "role")
 	private String role;
-//	@OneToMany(mappedBy = "user")
-//	List<Account> accountList;
+	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
+	List<Account> accountList;
 
 	public User() {
 	}
