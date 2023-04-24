@@ -36,27 +36,21 @@ public class Account {
 
 	}
 
-//	public Double getAccountBalance() {
-//		double accountBalance = 0.0;
-//		for (Transactions transaction : transactionsList) {
-//			accountBalance += transaction.getAmount();
-//		}
-//		return accountBalance;
-//	}
-
-//	@ManyToOne
-//	@JoinColumn(name = "User_id", nullable = false)
-//	@JsonManagedReference
-//	private User user;
+	public Double getAccountBalance() {
+		double accountBalance = 0.0;
+		for (Transactions transaction : transactionsList) {
+			accountBalance += transaction.getAmount();
+		}
+		return accountBalance;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "User_id", nullable = false)
-//	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private User user;
 
-//	@OneToMany(mappedBy = "account")
-//	List<Transactions> transactionsList;
+	@OneToMany(mappedBy = "account")
+	List<Transactions> transactionsList;
 
 	public Account() {
 	}
