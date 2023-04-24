@@ -1,5 +1,6 @@
 package com.edmond.bank.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class Transactions {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "Account_id", nullable = false)
-	@JsonIgnore
+	@JsonBackReference
 	private Account account;
 
 	public Transactions() {

@@ -2,6 +2,7 @@ package com.edmond.bank.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -46,7 +47,7 @@ public class Account {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "User_id", nullable = false)
-	@JsonIgnore
+	@JsonBackReference
 	private User user;
 
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
