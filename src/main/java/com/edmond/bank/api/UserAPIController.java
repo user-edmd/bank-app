@@ -19,7 +19,7 @@ public class UserAPIController {
         return userService.findById(id);
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<User> getAllUsers() {
         return userService.findAll();
     }
@@ -35,4 +35,11 @@ public class UserAPIController {
         userService.deleteById(id);
     }
 
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable int id, @RequestBody User user) {
+        User updateUser = userService.findById(id);
+        updateUser.setFirstName(user.getFirstName());
+        userService.save(updateUser);
+        return updateUser;
+    }
 }
