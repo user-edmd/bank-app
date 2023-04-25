@@ -7,6 +7,8 @@ import com.edmond.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user/{userId}/account/")
 
@@ -21,6 +23,11 @@ public class AccountApiController {
     @GetMapping("/{accountId}")
     public Account getAccount(@PathVariable int accountId) {
         return accountService.findById(accountId);
+    }
+
+    @GetMapping("/")
+    public List<Account> getAllAccounts(@PathVariable int userId) {
+        return userService.findById(userId).getAccountList();
     }
 
     @PostMapping("/")
