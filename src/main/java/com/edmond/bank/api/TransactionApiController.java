@@ -25,6 +25,12 @@ public class TransactionApiController {
         return transactionsService.findById(transactionId);
     }
 
+    @GetMapping("/")
+    public List<Transactions> getAllTransactions(@PathVariable int accountId) {
+        Account account = accountService.findById(accountId);
+        return account.getTransactionsList();
+    }
+
     @PostMapping("/")
     public Transactions addTransaction(@PathVariable("accountId") int accountId, @RequestBody Transactions transactions) {
         Account account = accountService.findById(accountId);
