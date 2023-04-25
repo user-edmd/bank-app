@@ -14,9 +14,9 @@ public class UserAPIController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable int id) {
-        return userService.findById(id);
+    @GetMapping("/{userId}")
+    public User getUser(@PathVariable int userId) {
+        return userService.findById(userId);
     }
 
     @GetMapping("/all")
@@ -30,14 +30,14 @@ public class UserAPIController {
         return user;
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable int id) {
-        userService.deleteById(id);
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable int userId) {
+        userService.deleteById(userId);
     }
 
-    @PutMapping("/{id}")
-    public User updateUser(@PathVariable int id, @RequestBody User user) {
-        User updateUser = userService.findById(id);
+    @PutMapping("/{userId}")
+    public User updateUser(@PathVariable int userId, @RequestBody User user) {
+        User updateUser = userService.findById(userId);
         updateUser.setFirstName(user.getFirstName());
         userService.save(updateUser);
         return updateUser;
