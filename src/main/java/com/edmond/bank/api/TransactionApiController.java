@@ -14,21 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/{userId}/account/{accountId}/transactions")
 public class TransactionApiController {
-    @Autowired
-    UserService userService;
+
     @Autowired
     AccountService accountService;
     @Autowired
     TransactionsService transactionsService;
 
-    @GetMapping("/{id}")
-    public Transactions getTransactions(@PathVariable int id) {
-        return transactionsService.findById(id);
-    }
-
-    @GetMapping("/")
-    public List<Transactions> getAllTransactions() {
-        return transactionsService.findAll();
+    @GetMapping("/{transactionId}")
+    public Transactions getTransaction(@PathVariable int transactionId) {
+        return transactionsService.findById(transactionId);
     }
 
     @PostMapping("/")
@@ -37,5 +31,20 @@ public class TransactionApiController {
         transactions.setAccount(account);
         transactionsService.save(transactions);
         return transactions;
+    }
+
+    @DeleteMapping("/{transactionId}")
+    public void deleteTransaction(@PathVariable int transactionId) {
+        transactionsService.deleteById(transactionId);
+    }
+
+    @PutMapping("/{transactionId}")
+    public Transactions updateTransaction(@PathVariable int transactionId, @RequestBody Transactions transactions) {
+        Transactions updatedTransaction = transactionsService.findById(transactionId);
+        updatedTransaction.setAmount(transactions.getAmount());
+        updatedTransaction.setTransactionType(transactions.getTransactionType());
+        updatedTransaction.setDate(transactions.getDate());
+        transactionsService.save(updatedTransaction);
+        return updatedTransaction;
     }
 }

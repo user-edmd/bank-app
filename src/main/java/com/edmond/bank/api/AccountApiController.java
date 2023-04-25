@@ -18,9 +18,9 @@ public class AccountApiController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/{id}")
-    public Account getAccount(@PathVariable int id) {
-        return accountService.findById(id);
+    @GetMapping("/{accountId}")
+    public Account getAccount(@PathVariable int accountId) {
+        return accountService.findById(accountId);
     }
 
     @PostMapping("/")
@@ -31,4 +31,17 @@ public class AccountApiController {
         return account;
     }
 
+    @PutMapping("/{accountId}")
+    public Account updateAccount(@PathVariable int accountId, @RequestBody Account account) {
+        Account updatedAccount = accountService.findById(accountId);
+        updatedAccount.setAccountType(account.getAccountType());
+        updatedAccount.setAccountNumber(account.getAccountNumber());
+        accountService.save(updatedAccount);
+        return updatedAccount;
+    }
+
+    @DeleteMapping("/{accountId}")
+    public void deleteAccount(@PathVariable("accountId") int accountId) {
+        accountService.deleteById(accountId);
+    }
 }
