@@ -15,3 +15,11 @@ VALUES ('Deposit', 50.00, '2022-12-16', 1),
        ('Deposit', 2500.00, '2023-04-01', 2),
        ('Deposit', 3983.50, '2023-04-03', 3),
        ('Deposit', 483.98, '2023-04-05', 4);
+
+INSERT INTO users (username, password, enabled)
+  values ('ebasilan@gmail.com', '{noop}ebasilan', 1),
+         ('tlugo@yahoo.com', '{noop}tlugo', 1);
+
+INSERT INTO authorities (username, authority)
+  values ('ebasilan@gmail.com', 'ROLE_ADMIN'),
+         ('tlugo@yahoo.com', 'ROLE_USER');
