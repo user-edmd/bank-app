@@ -2,6 +2,7 @@ package com.edmond.bank.api;
 
 import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
+import com.edmond.bank.model.AccountTransfer;
 import com.edmond.bank.service.AccountService;
 import com.edmond.bank.service.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,11 @@ public class TransactionRestController {
         updatedTransaction.setDate(transactions.getDate());
         transactionsService.save(updatedTransaction);
         return updatedTransaction;
+    }
+
+    @PostMapping("/transferTo/{accountIdTo}")
+    public void transferToAccount(@PathVariable("accountId") int accountId, @PathVariable("accountIdTo") int accountIdTo, @RequestBody AccountTransfer accountTransfer) {
+        transactionsService.transferBetweenAccounts(accountService.findById(accountId),
+				accountService.findById(accountIdTo), accountTransfer.getAmountToTransfer());
     }
 }
