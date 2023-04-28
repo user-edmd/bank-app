@@ -69,6 +69,10 @@ public class TransactionsServiceImpl implements TransactionsService {
 
 		User userFrom = userService.findById(accountIdFrom.getUserId());
 		accountIdFrom.setUser(userFrom);
+
+		if (amount > accountIdFrom.getAccountBalance())
+			throw new RuntimeException("Cannot transfer to same account");
+
 		Transactions transactionFrom = new Transactions();
 		transactionFrom.setAccount(accountIdFrom);
 		transactionFrom.setAccountId(accountIdFrom.getId());
