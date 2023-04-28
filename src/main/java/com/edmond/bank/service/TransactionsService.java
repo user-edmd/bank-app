@@ -5,6 +5,7 @@ import java.util.List;
 import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
 import com.edmond.bank.model.TransactionsForm;
+import org.springframework.data.domain.Page;
 
 public interface TransactionsService {
 
@@ -21,5 +22,7 @@ public interface TransactionsService {
 	public void transferBetweenAccounts(Account accountIdTo, Account accountIdFrom, Double amount);
 
 	public void createTransaction(int accountId, int userId, TransactionsForm transactionsForm);
+
+	public Page<Transactions> findByAccountId(int accountId);
 
 }

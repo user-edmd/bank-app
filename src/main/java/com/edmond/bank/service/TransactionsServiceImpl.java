@@ -6,6 +6,10 @@ import java.util.Optional;
 import com.edmond.bank.model.TransactionsForm;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.edmond.bank.dao.TransactionsRepository;
@@ -106,5 +110,11 @@ public class TransactionsServiceImpl implements TransactionsService {
 		transaction.setAccount(account);
 		account.setUser(user);
 		save(transaction);
+	}
+
+	@Override
+	public Page<Transactions> findByAccountId(int accountId) {
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("date").descending());
+		return this.transactionsRepository.findByAccountId(accountId, pageable);
 	}
 }
