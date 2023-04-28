@@ -64,6 +64,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 	}
 
 	public void transferBetweenAccounts(Account accountIdFrom, Account accountIdTo, Double amount) {
+		if (amount <= 0)
+			throw new RuntimeException("Transfer amount must be greater than zero");
+
 		if (accountIdFrom.getId() == accountIdTo.getId())
 			throw new RuntimeException("Cannot transfer to same account");
 
@@ -71,7 +74,7 @@ public class TransactionsServiceImpl implements TransactionsService {
 		accountIdFrom.setUser(userFrom);
 
 		if (amount > accountIdFrom.getAccountBalance())
-			throw new RuntimeException("Cannot transfer to same account");
+			throw new RuntimeException("Unable to transfer due to insufficient funds in account (..." + accountIdFrom.lastFourDigitsAcctNumber() + ")");
 
 		Transactions transactionFrom = new Transactions();
 		transactionFrom.setAccount(accountIdFrom);
