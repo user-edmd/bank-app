@@ -2,16 +2,21 @@ package com.edmond.bank.api;
 
 import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
+import com.edmond.bank.model.AccountTransfer;
 import com.edmond.bank.service.AccountService;
 import com.edmond.bank.service.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user/{userId}/account/{accountId}/transactions")
 public class TransactionRestController {
+
+    private static final Pageable DEFAULT_PAGEABLE = PageRequest.of(0, 10, Sort.by("date").descending());
 
     @Autowired
     AccountService accountService;
@@ -24,9 +29,9 @@ public class TransactionRestController {
     }
 
     @GetMapping("/")
-    public List<Transactions> getAllTransactions(@PathVariable int accountId) {
-        Account account = accountService.findById(accountId);
-        return account.getTransactionsList();
+    public Page<Transactions> getAllTransactions(@PathVariable int accountId) {
+        return transactionsService.findByAccountId(accountId);
+
     }
 
     @PostMapping("/")
@@ -50,5 +55,11 @@ public class TransactionRestController {
         updatedTransaction.setDate(transactions.getDate());
         transactionsService.save(updatedTransaction);
         return updatedTransaction;
+    }
+
+    @PostMapping("/transferTo/{accountIdTo}")
+    public void transferToAccount(@PathVariable("accountId") int accountId, @PathVariable("accountIdTo") int accountIdTo, @RequestBody AccountTransfer accountTransfer) {
+        transactionsService.transferBetweenAccounts(accountService.findById(accountId),
+                accountService.findById(accountIdTo), accountTransfer.getAmountToTransfer());
     }
 }

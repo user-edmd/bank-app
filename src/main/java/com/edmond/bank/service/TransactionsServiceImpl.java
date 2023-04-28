@@ -6,6 +6,10 @@ import java.util.Optional;
 import com.edmond.bank.model.TransactionsForm;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.edmond.bank.dao.TransactionsRepository;
@@ -64,11 +68,18 @@ public class TransactionsServiceImpl implements TransactionsService {
 	}
 
 	public void transferBetweenAccounts(Account accountIdFrom, Account accountIdTo, Double amount) {
+		if (amount <= 0)
+			throw new RuntimeException("Transfer amount must be greater than zero");
+
 		if (accountIdFrom.getId() == accountIdTo.getId())
 			throw new RuntimeException("Cannot transfer to same account");
 
 		User userFrom = userService.findById(accountIdFrom.getUserId());
 		accountIdFrom.setUser(userFrom);
+
+		if (amount > accountIdFrom.getAccountBalance())
+			throw new RuntimeException("Unable to transfer due to insufficient funds in account (..." + accountIdFrom.lastFourDigitsAcctNumber() + ")");
+
 		Transactions transactionFrom = new Transactions();
 		transactionFrom.setAccount(accountIdFrom);
 		transactionFrom.setAccountId(accountIdFrom.getId());
@@ -99,5 +110,11 @@ public class TransactionsServiceImpl implements TransactionsService {
 		transaction.setAccount(account);
 		account.setUser(user);
 		save(transaction);
+	}
+
+	@Override
+	public Page<Transactions> findByAccountId(int accountId) {
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("date").descending());
+		return this.transactionsRepository.findByAccountId(accountId, pageable);
 	}
 }
