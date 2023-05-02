@@ -114,7 +114,7 @@ public class TransactionsServiceImpl implements TransactionsService {
 
 	@Override
 	public Page<Transactions> findByAccountId(int accountId) {
-		Pageable pageable = PageRequest.of(0, 10, Sort.by("date").descending());
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("id").descending());
 		return this.transactionsRepository.findByAccountId(accountId, pageable);
 	}
 }

@@ -39,7 +39,7 @@ public class Account {
 		for (Transactions transaction : transactionsList) {
 			accountBalance += transaction.getAmount();
 		}
-		return accountBalance;
+		return Math.round(accountBalance * 100.0) / 100.0;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
