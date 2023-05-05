@@ -20,11 +20,6 @@ public class UserRestController {
         return userService.findById(userId);
     }
 
-    @GetMapping("/all")
-    public List<User> getAllUsers() {
-        return userService.findAll();
-    }
-
     @PostMapping("/")
     public User addUser(@RequestBody User user) {
         userService.save(user);

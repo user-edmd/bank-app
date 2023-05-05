@@ -49,9 +49,7 @@ public class AccountServiceImpl implements AccountService {
 		Account account = new Account();
 		account.setAccountType(accountForm.getAccountType());
 		account.setUser(user);
-		Optional<String> optionalAccountNumber = Optional.ofNullable(account.getAccountNumber());
-		if (!optionalAccountNumber.isPresent())
-			account.setAccountNumber(String.valueOf((long) (Math.random() * 10000000000000000L)));
+		account.setAccountNumber(String.valueOf((long) (Math.random() * 10000000000000000L)));
 		save(account);
 	}
 

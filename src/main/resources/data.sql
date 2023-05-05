@@ -1,7 +1,7 @@
 INSERT INTO user (first_name, last_name, address, ssn, dob, username, password, role)
-VALUES ('Edmond', 'Basilan', '123 Main St', '123-45-6789', '1990-06-14', 'ebasilan@gmail.com', 'ebasilan', 'ADMIN'),
-       ('Tom', 'Lugo', '123 Main St', '123-45-6789', '2000-01-01', 'tlugo@yahoo.com', 'tlugo', 'USER'),
-       ('admin', 'admin', '123 Main St', '123-45-6789', '1995-09-30', 'admin', 'admin', 'ADMIN');
+VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-14', 'ebasilan@gmail.com', 'ebasilan', 'ADMIN'),
+       ('Tom', 'Lugo', '456 B St San Diego, CA', '325-46-8779', '2000-01-01', 'tlugo@yahoo.com', 'tlugo', 'USER'),
+       ('admin', 'admin', '789 C St San Diego, CA', '643-02-1054 ', '1995-09-30', 'admin', 'admin', 'ADMIN');
 
 INSERT INTO account (account_type, account_number, User_id)
 VALUES ('Checking', '3604048489250263', 1),
