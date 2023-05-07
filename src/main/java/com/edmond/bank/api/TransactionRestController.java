@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/user/{userId}/account/{accountId}/transactions")
@@ -30,9 +32,8 @@ public class TransactionRestController {
     }
 
     @GetMapping("/")
-    public Page<Transactions> getAllTransactions(@PathVariable int accountId) {
-        return transactionsService.findByAccountId(accountId);
-
+    public Page<Transactions> getAllTransactions(@PathVariable int accountId, Pageable pageable) {
+        return transactionsService.findByAccountId(accountId, pageable);
     }
 
     @PostMapping("/")

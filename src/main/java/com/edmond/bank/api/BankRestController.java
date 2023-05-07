@@ -7,10 +7,13 @@ import com.edmond.bank.service.AccountService;
 import com.edmond.bank.service.TransactionsService;
 import com.edmond.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @CrossOrigin
@@ -37,8 +40,13 @@ public class BankRestController {
         return accountService.findAll();
     }
 
-    @GetMapping("transactions/all")
-    public List<Transactions> getAllTransactions() {
-        return transactionsService.findAll();
+//    @GetMapping("transactions/all")
+//    public List<Transactions> getAllTransactions() {
+//        return transactionsService.findAll();
+//    }
+
+@GetMapping("transactions/all")
+    public Page<Transactions> getAllTransactions(Pageable pageable) {
+        return transactionsService.findAll(pageable);
     }
 }

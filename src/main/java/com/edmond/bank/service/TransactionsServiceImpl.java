@@ -29,9 +29,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 	@Autowired
 	private AccountService accountService;
 
-	public List<Transactions> findAll() {
-		return transactionsRepository.findAll();
-	}
+//	public List<Transactions> findAll() {
+//		return transactionsRepository.findAll();
+//	}
 
 	public Transactions findById(int theId) {
 		Optional<Transactions> result = transactionsRepository.findById(theId);
@@ -113,8 +113,12 @@ public class TransactionsServiceImpl implements TransactionsService {
 	}
 
 	@Override
-	public Page<Transactions> findByAccountId(int accountId) {
-		Pageable pageable = PageRequest.of(0, 10, Sort.by("id").descending());
+	public Page<Transactions> findByAccountId(int accountId, Pageable pageable) {
+//		Pageable pageable = PageRequest.of(0, 5, Sort.by("id").descending());
 		return this.transactionsRepository.findByAccountId(accountId, pageable);
+	}
+
+	public Page<Transactions> findAll(Pageable pageable) {
+		return this.transactionsRepository.findAll(pageable);
 	}
 }

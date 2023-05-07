@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/user/{userId}/account/")
+@RequestMapping("/account")
 
 public class AccountRestController {
 

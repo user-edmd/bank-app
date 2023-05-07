@@ -6,10 +6,11 @@ import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
 import com.edmond.bank.model.TransactionsForm;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TransactionsService {
 
-	public List<Transactions> findAll();
+//	public List<Transactions> findAll();
 
 	public Transactions findById(int theId);
 
@@ -23,6 +24,8 @@ public interface TransactionsService {
 
 	public void createTransaction(int accountId, int userId, TransactionsForm transactionsForm);
 
-	public Page<Transactions> findByAccountId(int accountId);
+	public Page<Transactions> findByAccountId(int accountId, Pageable pageable);
+
+	public Page<Transactions> findAll(Pageable pageable);
 
 }
