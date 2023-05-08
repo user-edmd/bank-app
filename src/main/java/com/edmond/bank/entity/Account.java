@@ -50,6 +50,7 @@ public class Account {
 
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
+	@JsonIgnore
 	List<Transactions> transactionsList;
 
 	public Account() {

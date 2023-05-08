@@ -17,10 +17,10 @@ import java.util.List;
 @CrossOrigin
 @RestController
 //@RequestMapping("/user/{userId}/account/{accountId}/transactions")
-@RequestMapping("transaction")
+@RequestMapping("account/{accountId}/transactions")
 public class TransactionRestController {
 
-    private static final Pageable DEFAULT_PAGEABLE = PageRequest.of(0, 10, Sort.by("date").descending());
+    private static final Pageable DEFAULT_PAGEABLE = PageRequest.of(0, 5, Sort.by("id").descending());
 
     @Autowired
     AccountService accountService;
@@ -32,7 +32,7 @@ public class TransactionRestController {
         return transactionsService.findById(transactionId);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public Page<Transactions> getAllTransactions(@PathVariable int accountId, Pageable pageable) {
         return transactionsService.findByAccountId(accountId, pageable);
     }
