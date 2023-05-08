@@ -16,7 +16,8 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/user/{userId}/account/{accountId}/transactions")
+//@RequestMapping("/user/{userId}/account/{accountId}/transactions")
+@RequestMapping("transaction")
 public class TransactionRestController {
 
     private static final Pageable DEFAULT_PAGEABLE = PageRequest.of(0, 10, Sort.by("date").descending());

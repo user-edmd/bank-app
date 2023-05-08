@@ -45,8 +45,9 @@ public class BankRestController {
 //        return transactionsService.findAll();
 //    }
 
-@GetMapping("transactions/all")
-    public Page<Transactions> getAllTransactions(Pageable pageable) {
-        return transactionsService.findAll(pageable);
+    @GetMapping("transactions/all")
+        public Page<Transactions> getAllTransactions(Pageable pageable) {
+            System.out.println("api call");
+            return transactionsService.findAll(pageable);
+        }
     }
-}

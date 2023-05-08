@@ -35,7 +35,8 @@ VALUES ('Deposit', 5000.00, '2022-12-16', 1),
        ('Deposit', 841.40, '2023-04-05', 1),
        ('Deposit', 117.24, '2023-04-05', 1),
        ('Deposit', 136.16, '2023-04-05', 1),
-       ('Deposit', 507.07, '2023-04-05', 1);
+       ('Deposit', 507.07, '2023-04-05', 1),
+       ('Deposit', 1000.0, '2023-05-07', 4);
 
 INSERT INTO users (username, password, enabled)
   values ('ebasilan@gmail.com', '{noop}ebasilan', 1),
