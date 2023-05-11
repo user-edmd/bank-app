@@ -32,8 +32,8 @@ public class AccountRestController {
     }
 
     @PostMapping("/")
-    public Account addAccount(@PathVariable("userId") int userId, @RequestBody Account account) {
-        User user = userService.findById(userId);
+    public Account addAccount(@RequestBody Account account) {
+        User user = userService.findById(account.getUserId());
         account.setUser(user);
         accountService.save(account);
         return account;

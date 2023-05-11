@@ -36,8 +36,10 @@ public class Account {
 	}
 
 	public Double getAccountBalance() {
+		if (this.transactionsList == null)
+			return 0.0;
 		double accountBalance = 0.0;
-		for (Transactions transaction : transactionsList) {
+		for (Transactions transaction : this.transactionsList) {
 			accountBalance += transaction.getAmount();
 		}
 		return Math.round(accountBalance * 100.0) / 100.0;
