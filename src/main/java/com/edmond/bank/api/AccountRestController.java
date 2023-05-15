@@ -31,11 +31,17 @@ public class AccountRestController {
         return userService.findById(userId).getAccountList();
     }
 
-    @PostMapping("/")
-    public Account addAccount(@RequestBody Account account) {
-        User user = userService.findById(account.getUserId());
-        account.setUser(user);
-        accountService.save(account);
+//    @PostMapping
+//    public Account addAccount(@RequestBody Account account) {
+//        User user = userService.findById(account.getUserId());
+//        account.setUser(user);
+//        accountService.save(account);
+//        return account;
+//    }
+
+    @PostMapping
+    public Account createAccount(@RequestBody Account account) {
+        accountService.createAccount(account);
         return account;
     }
 

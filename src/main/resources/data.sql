@@ -5,10 +5,10 @@ VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-1
        ('admin', 'admin', '789 C St San Diego, CA', '643-02-1054 ', '1995-09-30', 'admin', 'admin', 'ADMIN');
 
 INSERT INTO account (account_type, account_number, User_id)
-VALUES ('Checking', '3604048489250263', 1),
-       ('Savings', '7370767860145505', 1),
-       ('Checking', '4695382874482366', 2),
-       ('Savings', '1305385097666747', 3);
+VALUES ('Checking', '0000000000000001', 1),
+       ('Savings', '0000000000000002', 1),
+       ('Checking', '0000000000000003', 2),
+       ('Savings', '0000000000000004', 3);
 
 INSERT INTO transactions (transaction_type, amount, date, Account_id)
 VALUES ('Deposit', 5000.00, '2000-01-01', 1),

@@ -20,10 +20,9 @@ public class UserRestController {
         return userService.findById(userId);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public User addUser(@RequestBody User user) {
-        userService.save(user);
-        return user;
+        return userService.createUser(user);
     }
 
     @DeleteMapping("/{userId}")

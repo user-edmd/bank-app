@@ -16,7 +16,7 @@ public interface UserService {
 
 	public void deleteById(int theId);
 
-	public void createUser(UserForm userForm);
+	public User createUser(User user);
 
 	public void editUser(int userId, UserForm userForm);
 

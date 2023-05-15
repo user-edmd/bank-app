@@ -44,12 +44,21 @@ public class AccountServiceImpl implements AccountService {
 		accountRepository.deleteById(theId);
 	}
 
-	public void createAccount(int userId, AccountForm accountForm) {
-		User user = userService.findById(userId);
-		Account account = new Account();
-		account.setAccountType(accountForm.getAccountType());
+//	public void createAccount(int userId, AccountForm accountForm) {
+//		User user = userService.findById(userId);
+//		Account account = new Account();
+//		account.setAccountType(accountForm.getAccountType());
+//		account.setUser(user);
+//		account.setAccountNumber(String.valueOf((long) (Math.random() * 10000000000000000L)));
+//		save(account);
+//	}
+
+	public void createAccount(Account account) {
+		User user = userService.findById(account.getUserId());
 		account.setUser(user);
-		account.setAccountNumber(String.valueOf((long) (Math.random() * 10000000000000000L)));
+		account.setAccountType(account.getAccountType());
+		save(account);
+		account.setAccountNumber();
 		save(account);
 	}
 

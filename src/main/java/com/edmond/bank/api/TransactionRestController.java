@@ -38,8 +38,8 @@ public class TransactionRestController {
     }
 
     @PostMapping("/")
-    public Transactions addTransaction(@PathVariable("accountId") int accountId, @RequestBody Transactions transactions) {
-        Account account = accountService.findById(accountId);
+    public Transactions addTransaction(@RequestBody Transactions transactions) {
+        Account account = accountService.findById(transactions.getAccountId());
         transactions.setAccount(account);
         transactionsService.save(transactions);
         return transactions;

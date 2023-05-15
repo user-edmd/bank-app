@@ -53,9 +53,12 @@ public class Account {
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
 	@JsonIgnore
-	List<Transactions> transactionsList;
+	private List<Transactions> transactionsList;
 
-	public Account() {
+	public final void setAccountNumber() {
+		this.accountNumber = String.format("%016d", this.id);
 	}
+
+	public Account() {	}
 
 }
