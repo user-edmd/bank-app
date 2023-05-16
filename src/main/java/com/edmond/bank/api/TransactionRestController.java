@@ -37,7 +37,7 @@ public class TransactionRestController {
         return transactionsService.findByAccountId(accountId, pageable);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Transactions addTransaction(@RequestBody Transactions transactions) {
         Account account = accountService.findById(transactions.getAccountId());
         transactions.setAccount(account);
