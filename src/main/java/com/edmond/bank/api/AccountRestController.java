@@ -26,7 +26,7 @@ public class AccountRestController {
         return accountService.findById(accountId);
     }
 
-    @GetMapping("/")
+    @GetMapping("/user/{userId}")
     public List<Account> getAllAccounts(@PathVariable int userId) {
         return userService.findById(userId).getAccountList();
     }
