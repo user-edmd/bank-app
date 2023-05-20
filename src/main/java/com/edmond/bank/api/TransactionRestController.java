@@ -16,28 +16,25 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-//@RequestMapping("/user/{userId}/account/{accountId}/transactions")
-@RequestMapping("account/{accountId}/transactions")
+@RequestMapping
 public class TransactionRestController {
-
-    private static final Pageable DEFAULT_PAGEABLE = PageRequest.of(0, 5, Sort.by("id").descending());
 
     @Autowired
     AccountService accountService;
     @Autowired
     TransactionsService transactionsService;
 
-    @GetMapping("/{transactionId}")
+    @GetMapping("account/{accountId}/transactions/{transactionId}")
     public Transactions getTransaction(@PathVariable int transactionId) {
         return transactionsService.findById(transactionId);
     }
 
-    @GetMapping
+    @GetMapping("account/{accountId}/transactions")
     public Page<Transactions> getAllTransactions(@PathVariable int accountId, Pageable pageable) {
         return transactionsService.findByAccountId(accountId, pageable);
     }
 
-    @PostMapping
+    @PostMapping("account/{accountId}/transactions")
     public Transactions addTransaction(@RequestBody Transactions transactions) {
         Account account = accountService.findById(transactions.getAccountId());
         transactions.setAccount(account);
@@ -45,12 +42,12 @@ public class TransactionRestController {
         return transactions;
     }
 
-    @DeleteMapping("/{transactionId}")
+    @DeleteMapping("account/{accountId}/transactions/{transactionId}")
     public void deleteTransaction(@PathVariable int transactionId) {
         transactionsService.deleteById(transactionId);
     }
 
-    @PutMapping("/{transactionId}")
+    @PutMapping("account/{accountId}/transactions/{transactionId}")
     public Transactions updateTransaction(@PathVariable int transactionId, @RequestBody Transactions transactions) {
         Transactions updatedTransaction = transactionsService.findById(transactionId);
         updatedTransaction.setAmount(transactions.getAmount());
@@ -60,9 +57,9 @@ public class TransactionRestController {
         return updatedTransaction;
     }
 
-    @PostMapping("/transferTo/{accountIdTo}")
-    public void transferToAccount(@PathVariable("accountId") int accountId, @PathVariable("accountIdTo") int accountIdTo, @RequestBody AccountTransfer accountTransfer) {
-        transactionsService.transferBetweenAccounts(accountService.findById(accountId),
-                accountService.findById(accountIdTo), accountTransfer.getAmountToTransfer());
+    @PostMapping("transactions/transferMoney")
+    public void transferToAccount(@RequestBody AccountTransfer accountTransfer) {
+        transactionsService.transferBetweenAccounts(accountService.findById(accountTransfer.getAccountIdFrom()),
+                accountService.findById(accountTransfer.getAccountIdTo()), accountTransfer.getAmountToTransfer());
     }
 }
