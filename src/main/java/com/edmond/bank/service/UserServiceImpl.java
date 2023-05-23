@@ -64,15 +64,27 @@ public class UserServiceImpl implements UserService {
 		save(newUser);
 		return newUser;
 	}
-	public void editUser(int userId, UserForm userForm) {
-		User user = findById(userId);
-		user.setUsername(userForm.getUsername());
-		user.setPassword(userForm.getPassword());
-		user.setFirstName(userForm.getFirstName());
-		user.setLastName(userForm.getLastName());
-		user.setAddress(userForm.getAddress());
-		user.setDob(userForm.getDob());
-		user.setSsn(userForm.getSsn());
+//	public void editUser(int userId, UserForm userForm) {
+//		User user = findById(userId);
+//		user.setUsername(userForm.getUsername());
+//		user.setPassword(userForm.getPassword());
+//		user.setFirstName(userForm.getFirstName());
+//		user.setLastName(userForm.getLastName());
+//		user.setAddress(userForm.getAddress());
+//		user.setDob(userForm.getDob());
+//		user.setSsn(userForm.getSsn());
+//		save(user);
+//	}
+
+	public void editUser(User updatedUser) {
+		User user = findById(updatedUser.getId());
+		user.setUsername(updatedUser.getUsername());
+		user.setPassword(updatedUser.getPassword());
+		user.setFirstName(updatedUser.getFirstName());
+		user.setLastName(updatedUser.getLastName());
+		user.setAddress(updatedUser.getAddress());
+		user.setDob(updatedUser.getDob());
+		user.setSsn(updatedUser.getSsn());
 		save(user);
 	}
 

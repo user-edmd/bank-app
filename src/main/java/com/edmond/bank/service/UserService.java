@@ -18,7 +18,8 @@ public interface UserService {
 
 	public User createUser(User user);
 
-	public void editUser(int userId, UserForm userForm);
+//	public void editUser(int userId, UserForm userForm);
+	public void editUser(User user);
 
 	public User findUserByEmail(String email);
 

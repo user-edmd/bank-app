@@ -31,10 +31,8 @@ public class UserRestController {
     }
 
     @PutMapping("/{userId}")
-    public User updateUser(@PathVariable int userId, @RequestBody User user) {
-        User updateUser = userService.findById(userId);
-        updateUser.setFirstName(user.getFirstName());
-        userService.save(updateUser);
-        return updateUser;
+    public User updateUser(@RequestBody User user) {
+        this.userService.editUser(user);
+        return user;
     }
 }
