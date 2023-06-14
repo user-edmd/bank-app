@@ -39,26 +39,52 @@ public class UserServiceImpl implements UserService {
 		userRepository.deleteById(theId);
 	}
 
-	public void createUser(UserForm userForm) {
-		User user = new User();
-		user.setUsername(userForm.getUsername());
-		user.setPassword(userForm.getPassword());
-		user.setFirstName(userForm.getFirstName());
-		user.setLastName(userForm.getLastName());
-		user.setAddress(userForm.getAddress());
-		user.setDob(userForm.getDob());
-		user.setSsn(userForm.getSsn());
-		save(user);
+//	public void createUser(UserForm userForm) {
+//		User user = new User();
+//		user.setUsername(userForm.getUsername());
+//		user.setPassword(userForm.getPassword());
+//		user.setFirstName(userForm.getFirstName());
+//		user.setLastName(userForm.getLastName());
+//		user.setAddress(userForm.getAddress());
+//		user.setDob(userForm.getDob());
+//		user.setSsn(userForm.getSsn());
+//		save(user);
+//	}
+
+	public User createUser(User user) {
+		User newUser = new User();
+		newUser.setUsername(user.getUsername());
+		newUser.setPassword(user.getPassword());
+		newUser.setFirstName(user.getFirstName());
+		newUser.setLastName(user.getLastName());
+		newUser.setAddress(user.getAddress());
+		newUser.setDob(user.getDob());
+		newUser.setSsn(user.getSsn());
+		newUser.setRole("USER");
+		save(newUser);
+		return newUser;
 	}
-	public void editUser(int userId, UserForm userForm) {
-		User user = findById(userId);
-		user.setUsername(userForm.getUsername());
-		user.setPassword(userForm.getPassword());
-		user.setFirstName(userForm.getFirstName());
-		user.setLastName(userForm.getLastName());
-		user.setAddress(userForm.getAddress());
-		user.setDob(userForm.getDob());
-		user.setSsn(userForm.getSsn());
+//	public void editUser(int userId, UserForm userForm) {
+//		User user = findById(userId);
+//		user.setUsername(userForm.getUsername());
+//		user.setPassword(userForm.getPassword());
+//		user.setFirstName(userForm.getFirstName());
+//		user.setLastName(userForm.getLastName());
+//		user.setAddress(userForm.getAddress());
+//		user.setDob(userForm.getDob());
+//		user.setSsn(userForm.getSsn());
+//		save(user);
+//	}
+
+	public void editUser(User updatedUser) {
+		User user = findById(updatedUser.getId());
+		user.setUsername(updatedUser.getUsername());
+		user.setPassword(updatedUser.getPassword());
+		user.setFirstName(updatedUser.getFirstName());
+		user.setLastName(updatedUser.getLastName());
+		user.setAddress(updatedUser.getAddress());
+		user.setDob(updatedUser.getDob());
+		user.setSsn(updatedUser.getSsn());
 		save(user);
 	}
 

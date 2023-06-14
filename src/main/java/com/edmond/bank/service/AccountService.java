@@ -16,6 +16,6 @@ public interface AccountService {
 
 	public void deleteById(int theId);
 
-	public void createAccount(int userId, AccountForm accountForm);
+	public void createAccount(Account account);
 
 }

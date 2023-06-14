@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/user/{userId}/account/")
+@RequestMapping("/account")
 
 public class AccountRestController {
 
@@ -25,16 +26,22 @@ public class AccountRestController {
         return accountService.findById(accountId);
     }
 
-    @GetMapping("/")
+    @GetMapping("/user/{userId}")
     public List<Account> getAllAccounts(@PathVariable int userId) {
         return userService.findById(userId).getAccountList();
     }
 
-    @PostMapping("/")
-    public Account addAccount(@PathVariable("userId") int userId, @RequestBody Account account) {
-        User user = userService.findById(userId);
-        account.setUser(user);
-        accountService.save(account);
+//    @PostMapping
+//    public Account addAccount(@RequestBody Account account) {
+//        User user = userService.findById(account.getUserId());
+//        account.setUser(user);
+//        accountService.save(account);
+//        return account;
+//    }
+
+    @PostMapping
+    public Account createAccount(@RequestBody Account account) {
+        accountService.createAccount(account);
         return account;
     }
 

@@ -29,9 +29,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 	@Autowired
 	private AccountService accountService;
 
-	public List<Transactions> findAll() {
-		return transactionsRepository.findAll();
-	}
+//	public List<Transactions> findAll() {
+//		return transactionsRepository.findAll();
+//	}
 
 	public Transactions findById(int theId) {
 		Optional<Transactions> result = transactionsRepository.findById(theId);
@@ -84,7 +84,7 @@ public class TransactionsServiceImpl implements TransactionsService {
 		transactionFrom.setAccount(accountIdFrom);
 		transactionFrom.setAccountId(accountIdFrom.getId());
 		transactionFrom.setAmount(amount * -1);
-		transactionFrom.setTransactionType("Transfer to Account (..." + accountIdTo.lastFourDigitsAcctNumber() + ")");
+		transactionFrom.setTransactionType("Transfer to " + accountIdTo.getAccountType() + " Account (..." + accountIdTo.lastFourDigitsAcctNumber() + ") " + accountIdTo.getUser().getFirstName().toUpperCase().charAt(0) + ". " + accountIdTo.getUser().getLastName().toUpperCase());
 
 		User userTo = userService.findById(accountIdTo.getUserId());
 		accountIdTo.setUser(userTo);
@@ -92,7 +92,7 @@ public class TransactionsServiceImpl implements TransactionsService {
 		transactionTo.setAccount(accountIdTo);
 		transactionTo.setAccountId(accountIdTo.getId());
 		transactionTo.setAmount(amount);
-		transactionTo.setTransactionType("Transfer from Account (..." + accountIdFrom.lastFourDigitsAcctNumber() + ")");
+		transactionTo.setTransactionType("Transfer from " + accountIdFrom.getAccountType() + " Account (..." + accountIdFrom.lastFourDigitsAcctNumber() + ") " + accountIdFrom.getUser().getFirstName().toUpperCase().charAt(0) + ". " + accountIdFrom.getUser().getLastName().toUpperCase());
 
 		this.save(transactionFrom);
 		this.save(transactionTo);
@@ -113,8 +113,12 @@ public class TransactionsServiceImpl implements TransactionsService {
 	}
 
 	@Override
-	public Page<Transactions> findByAccountId(int accountId) {
-		Pageable pageable = PageRequest.of(0, 10, Sort.by("date").descending());
+	public Page<Transactions> findByAccountId(int accountId, Pageable pageable) {
+//		Pageable pageable = PageRequest.of(0, 5, Sort.by("id").descending());
 		return this.transactionsRepository.findByAccountId(accountId, pageable);
+	}
+
+	public Page<Transactions> findAll(Pageable pageable) {
+		return this.transactionsRepository.findAll(pageable);
 	}
 }

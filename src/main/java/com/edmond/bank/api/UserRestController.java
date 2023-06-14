@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserRestController {
 
@@ -19,15 +20,9 @@ public class UserRestController {
         return userService.findById(userId);
     }
 
-    @GetMapping("/all")
-    public List<User> getAllUsers() {
-        return userService.findAll();
-    }
-
-    @PostMapping("/")
+    @PostMapping
     public User addUser(@RequestBody User user) {
-        userService.save(user);
-        return user;
+        return userService.createUser(user);
     }
 
     @DeleteMapping("/{userId}")
@@ -36,10 +31,8 @@ public class UserRestController {
     }
 
     @PutMapping("/{userId}")
-    public User updateUser(@PathVariable int userId, @RequestBody User user) {
-        User updateUser = userService.findById(userId);
-        updateUser.setFirstName(user.getFirstName());
-        userService.save(updateUser);
-        return updateUser;
+    public User updateUser(@RequestBody User user) {
+        this.userService.editUser(user);
+        return user;
     }
 }

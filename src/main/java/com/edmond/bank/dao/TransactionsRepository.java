@@ -16,4 +16,6 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Inte
 
 	Page<Transactions> findByAccountId(int accountId, Pageable pageable);
 
+	Page<Transactions> findAll(Pageable pageable);
+
 }
