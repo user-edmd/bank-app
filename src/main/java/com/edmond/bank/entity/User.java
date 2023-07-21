@@ -2,12 +2,10 @@ package com.edmond.bank.entity;
 
 import java.util.List;
 
-import com.edmond.bank.validation.BirthDateValidator;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @Entity
@@ -35,8 +33,6 @@ public class User {
     @Column(name = "ssn")
     private String ssn;
 
-    @BirthDateValidator
-    @NotBlank(message = "Date of Birth cannot be empty.")
     @Column(name = "dob")
     private String dob;
 
