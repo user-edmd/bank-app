@@ -1,5 +1,5 @@
 INSERT INTO user (first_name, last_name, address, ssn, dob, username, password, role)
-VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-14', 'ebasilan@gmail.com', 'ebasilan', 'ADMIN'),
+VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-14', 'edmondbasilan@gmail.com', 'ebasilan', 'ADMIN'),
        ('Tom', 'Lugo', '456 B St San Diego, CA', '325-46-8779', '2000-01-01', 'tlugo@yahoo.com', 'tlugo', 'USER'),
        ('Yvette', 'Cao', '710 Oslo Way San Diego, CA', '928-82-6833', '1990-12-12', 'ycao@grossmont.com', 'ycao', 'USER'),
        ('admin', 'admin', '789 C St San Diego, CA', '643-02-1054 ', '1995-09-30', 'admin', 'admin', 'ADMIN');
