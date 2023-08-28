@@ -33,7 +33,7 @@ public class UserRestController {
         User result = userService.findById(userId); //Use optional
         String email = (String) auth.getToken().getClaims().get("email");
         if (result.getUsername().equalsIgnoreCase(email))
-            return ResponseHandler.generateResponse("Successfully retrieved data!", HttpStatus.OK, result);
+            return ResponseHandler.generateResponse("OK", HttpStatus.OK, result);
         else
             return ResponseHandler.generateResponse("Unauthorized Access", HttpStatus.UNAUTHORIZED, null);
     }

@@ -53,7 +53,7 @@ public class Account {
 	private User user;
 
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference
+//	@JsonManagedReference
 	@JsonIgnore
 	private List<Transactions> transactionsList;
 

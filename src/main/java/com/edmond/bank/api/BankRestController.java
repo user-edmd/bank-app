@@ -3,12 +3,15 @@ package com.edmond.bank.api;
 import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
 import com.edmond.bank.entity.User;
+import com.edmond.bank.exception.ResponseHandler;
 import com.edmond.bank.service.AccountService;
 import com.edmond.bank.service.TransactionsService;
 import com.edmond.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,13 +35,19 @@ public class BankRestController {
     TransactionsService transactionsService;
 
 
+//    @GetMapping("api/user/all")
+//    public List<User> getAllUsers(JwtAuthenticationToken auth) {
+//        Optional<String> email = Optional.of((String) auth.getToken().getClaims().get("email"));
+//        if(email.isPresent()) {
+//            userService.findUserByEmail(email.get());
+//        }
+//        return userService.findAll();
+//    }
+
     @GetMapping("api/user/all")
-    public List<User> getAllUsers(JwtAuthenticationToken auth) {
-        Optional<String> email = Optional.of((String) auth.getToken().getClaims().get("email"));
-        if(email.isPresent()) {
-            userService.findUserByEmail(email.get());
-        }
-        return userService.findAll();
+    public ResponseEntity<Object> getAllUsers(JwtAuthenticationToken auth) {
+        List<User> userList = userService.findAll();
+        return ResponseHandler.generateResponse("OK", HttpStatus.OK, userList);
     }
 
     @GetMapping("accounts/all")
