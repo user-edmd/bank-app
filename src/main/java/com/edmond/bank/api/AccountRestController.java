@@ -2,16 +2,20 @@ package com.edmond.bank.api;
 
 import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.User;
+import com.edmond.bank.exception.ResponseHandler;
 import com.edmond.bank.service.AccountService;
 import com.edmond.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/account")
+@RequestMapping("api/account")
 
 public class AccountRestController {
 
@@ -26,18 +30,21 @@ public class AccountRestController {
         return accountService.findById(accountId);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Account> getAllAccounts(@PathVariable int userId) {
-        return userService.findById(userId).getAccountList();
-    }
-
-//    @PostMapping
-//    public Account addAccount(@RequestBody Account account) {
-//        User user = userService.findById(account.getUserId());
-//        account.setUser(user);
-//        accountService.save(account);
-//        return account;
+//    @GetMapping("/user/{userId}")
+//    public List<Account> getAllAccounts(@PathVariable int userId) {
+//        return userService.findById(userId).getAccountList();
 //    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Object> getAllAccounts(@PathVariable int userId, JwtAuthenticationToken auth) {
+        User user = userService.findById(userId);
+        List<Account> result = user.getAccountList();
+        String email = (String) auth.getToken().getClaims().get("email");
+        if (user.getUsername().equalsIgnoreCase(email))
+            return ResponseHandler.generateResponse("OK", HttpStatus.OK, result);
+        else
+            return ResponseHandler.generateResponse("Unauthorized Access", HttpStatus.UNAUTHORIZED, null);
+    }
 
     @PostMapping
     public Account createAccount(@RequestBody Account account) {
