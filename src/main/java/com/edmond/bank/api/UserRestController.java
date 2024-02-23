@@ -22,10 +22,13 @@ public class UserRestController {
         String email = (String) auth.getToken().getClaims().get("email");
         User result = userService.findUserByEmail(email); //Use optional
 
-        if (result.getUsername().equalsIgnoreCase(email))
+        if (result == null) {
+            return ResponseHandler.generateResponse("Register Required", HttpStatus.ACCEPTED, null);
+        } else if (result.getUsername().equalsIgnoreCase(email)) {
             return ResponseHandler.generateResponse("OK", HttpStatus.OK, result);
-        else
+        } else {
             return ResponseHandler.generateResponse("Unauthorized Access", HttpStatus.UNAUTHORIZED, null);
+        }
     }
 
     /**
