@@ -6,6 +6,8 @@ import com.edmond.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,8 @@ public class UserRestController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<Object> getUser(JwtAuthenticationToken auth) {
-        String email = (String) auth.getToken().getClaims().get("email");
+    public ResponseEntity<Object> getUser(Authentication auth) {
+        String email = auth.getName();
         User result = userService.findUserByEmail(email); //Use optional
 
         if (result == null) {
@@ -62,5 +64,11 @@ public class UserRestController {
         User result = userService.findUserByEmail(email); //Use optional
 
         return result.getUsername().equalsIgnoreCase(email);
+    }
+
+    @GetMapping("/testGetUser")
+    @PreAuthorize("hasAuthority('Admin')")
+    public String testGetUser() {
+        return "Test";
     }
 }

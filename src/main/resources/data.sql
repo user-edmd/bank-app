@@ -1,8 +1,8 @@
-INSERT INTO user (first_name, last_name, address, ssn, dob, username, password, role)
-VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-14', 'edmondbasilan@gmail.com', 'ebasilan', 'ADMIN'),
-       ('Tom', 'Lugo', '456 B St San Diego, CA', '325-46-8779', '2000-01-01', 'tlugo@ebbankingtest.com', 'tlugo', 'USER'),
-       ('Yvette', 'Cao', '710 Oslo Way San Diego, CA', '928-82-6833', '1990-12-12', 'ycao@grossmont.com', 'ycao', 'USER'),
-       ('admin', 'admin', '789 C St San Diego, CA', '643-02-1054 ', '1995-09-30', 'admin', 'admin', 'ADMIN');
+INSERT INTO users (first_name, last_name, address, ssn, dob, username, password)
+VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-14', 'edmondbasilan@gmail.com', 'ebasilan'),
+       ('Tom', 'Lugo', '456 B St San Diego, CA', '325-46-8779', '2000-01-01', 'tlugo@ebbankingtest.com', 'tlugo'),
+       ('Yvette', 'Cao', '710 Oslo Way San Diego, CA', '928-82-6833', '1990-12-12', 'ycao@grossmont.com', 'ycao'),
+       ('admin', 'admin', '789 C St San Diego, CA', '643-02-1054 ', '1995-09-30', 'admin', 'admin');
 
 INSERT INTO account (account_type, account_number, User_id)
 VALUES ('Checking', '0000000000000001', 1),
@@ -165,11 +165,3 @@ VALUES ('Deposit', 5000.00, '2000-01-01', 1),
        ('Withdraw', 181.79, '2007-04-25', 4),
        ('Withdraw', 269.58, '2003-02-09', 4),
        ('Withdraw', 404.61, '2009-07-18', 2);
-
-INSERT INTO users (username, password, enabled)
-  values ('ebasilan@gmail.com', '{noop}ebasilan', 1),
-         ('tlugo@yahoo.com', '{noop}tlugo', 1);
-
-INSERT INTO authorities (username, authority)
-  values ('ebasilan@gmail.com', 'ROLE_ADMIN'),
-         ('tlugo@yahoo.com', 'ROLE_USER');

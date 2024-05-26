@@ -1,12 +1,9 @@
 package com.edmond.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @Entity

@@ -3,13 +3,13 @@ package com.edmond.bank.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
