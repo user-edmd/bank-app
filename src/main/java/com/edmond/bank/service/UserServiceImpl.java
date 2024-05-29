@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 	public User findById(int theId) {
 		Optional<User> result = userRepository.findById(theId);
-		User user = null;
+		User user;
 		if (result.isPresent()) {
 			user = result.get();
 		} else {
@@ -31,25 +31,13 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-	public void save(User theUser) {
-		userRepository.save(theUser);
+	public void save(User user) {
+		userRepository.save(user);
 	}
 
-	public void deleteById(int theId) {
-		userRepository.deleteById(theId);
+	public void deleteById(int id) {
+		userRepository.deleteById(id);
 	}
-
-//	public void createUser(UserForm userForm) {
-//		User user = new User();
-//		user.setUsername(userForm.getUsername());
-//		user.setPassword(userForm.getPassword());
-//		user.setFirstName(userForm.getFirstName());
-//		user.setLastName(userForm.getLastName());
-//		user.setAddress(userForm.getAddress());
-//		user.setDob(userForm.getDob());
-//		user.setSsn(userForm.getSsn());
-//		save(user);
-//	}
 
 	public User createUser(User user) {
 		User newUser = new User();
@@ -62,17 +50,6 @@ public class UserServiceImpl implements UserService {
 		save(newUser);
 		return newUser;
 	}
-//	public void editUser(int userId, UserForm userForm) {
-//		User user = findById(userId);
-//		user.setUsername(userForm.getUsername());
-//		user.setPassword(userForm.getPassword());
-//		user.setFirstName(userForm.getFirstName());
-//		user.setLastName(userForm.getLastName());
-//		user.setAddress(userForm.getAddress());
-//		user.setDob(userForm.getDob());
-//		user.setSsn(userForm.getSsn());
-//		save(user);
-//	}
 
 	public void editUser(User updatedUser) {
 		User user = findById(updatedUser.getId());
