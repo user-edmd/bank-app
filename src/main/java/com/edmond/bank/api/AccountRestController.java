@@ -31,10 +31,11 @@ public class AccountRestController {
         return accountService.findById(accountId);
     }
 
-//    @GetMapping("/user/{userId}")
-//    public List<Account> getAllAccounts(@PathVariable int userId) {
-//        return userService.findById(userId).getAccountList();
-//    }
+    @GetMapping("/getAccounts")
+    public List<Account> getAccountsFromUser(Authentication auth) {
+        User user = userService.findUserByEmail(auth.getName());
+        return (user != null) ? user.getAccountList() : null;
+    }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<Object> getAllAccounts(@PathVariable int userId, Authentication auth) {
@@ -64,6 +65,8 @@ public class AccountRestController {
 
     @DeleteMapping("/{accountId}")
     public void deleteAccount(@PathVariable("accountId") int accountId) {
-        accountService.deleteById(accountId);
+        Account account = accountService.findById(accountId);
+        if (account.getTransactionsList() == null)
+            accountService.deleteById(accountId);
     }
 }

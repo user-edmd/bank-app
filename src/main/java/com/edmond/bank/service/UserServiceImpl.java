@@ -54,13 +54,11 @@ public class UserServiceImpl implements UserService {
 	public User createUser(User user) {
 		User newUser = new User();
 		newUser.setUsername(user.getUsername());
-		newUser.setPassword(user.getPassword());
 		newUser.setFirstName(user.getFirstName());
 		newUser.setLastName(user.getLastName());
 		newUser.setAddress(user.getAddress());
 		newUser.setDob(user.getDob());
 		newUser.setSsn(user.getSsn());
-		newUser.setRole("USER");
 		save(newUser);
 		return newUser;
 	}
@@ -79,7 +77,6 @@ public class UserServiceImpl implements UserService {
 	public void editUser(User updatedUser) {
 		User user = findById(updatedUser.getId());
 		user.setUsername(updatedUser.getUsername());
-		user.setPassword(updatedUser.getPassword());
 		user.setFirstName(updatedUser.getFirstName());
 		user.setLastName(updatedUser.getLastName());
 		user.setAddress(updatedUser.getAddress());

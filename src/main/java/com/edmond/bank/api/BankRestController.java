@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,18 +35,9 @@ public class BankRestController {
     @Autowired
     TransactionsService transactionsService;
 
-
-//    @GetMapping("api/user/all")
-//    public List<User> getAllUsers(JwtAuthenticationToken auth) {
-//        Optional<String> email = Optional.of((String) auth.getToken().getClaims().get("email"));
-//        if(email.isPresent()) {
-//            userService.findUserByEmail(email.get());
-//        }
-//        return userService.findAll();
-//    }
-
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("api/user/all")
-    public ResponseEntity<Object> getAllUsers(JwtAuthenticationToken auth) {
+    public ResponseEntity<Object> getAllUsers() {
         List<User> userList = userService.findAll();
         return ResponseHandler.generateResponse("OK", HttpStatus.OK, userList);
     }
@@ -55,13 +47,8 @@ public class BankRestController {
         return accountService.findAll();
     }
 
-//    @GetMapping("transactions/all")
-//    public List<Transactions> getAllTransactions() {
-//        return transactionsService.findAll();
-//    }
-
     @GetMapping("transactions/all")
-        public Page<Transactions> getAllTransactions(Pageable pageable) {
-            return transactionsService.findAll(pageable);
-        }
+    public Page<Transactions> getAllTransactions(Pageable pageable) {
+        return transactionsService.findAll(pageable);
     }
+}

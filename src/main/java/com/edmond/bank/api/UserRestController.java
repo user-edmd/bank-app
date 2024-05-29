@@ -33,42 +33,28 @@ public class UserRestController {
         }
     }
 
-    /**
-     * TODO: This is an endpoint that should only be adminstered by an ADMIN. Put in AccountRestController instead
-     * @param user
-     * @param auth
-     * @return
-     */
     @PostMapping
     public User addUser(@RequestBody User user, JwtAuthenticationToken auth) {
         return userService.createUser(user);
     }
+
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable int userId, JwtAuthenticationToken auth) {
-        //TODO: Throw an error if not authenticated or authorized inside isUserAuthenticated method
-        if(isUserAuthenticated(userId, auth))
-            userService.deleteById(userId);
+        this.userService.deleteById(userId);
     }
 
-    @PutMapping("/{userId}")
-    public User updateUser(@PathVariable int userId, @RequestBody User user, JwtAuthenticationToken auth) {
-        if(isUserAuthenticated(userId, auth))
-            this.userService.editUser(user);
-
-        //TODO: Throw an error if not authenticated or authorized inside isUserAuthenticated method
+    @PutMapping
+    public User updateUser(@RequestBody User user, JwtAuthenticationToken auth) {
+        this.userService.editUser(user);
         return user;
     }
 
-    private boolean isUserAuthenticated(int userId, JwtAuthenticationToken auth) {
-        String email = (String) auth.getToken().getClaims().get("email");
-        User result = userService.findUserByEmail(email); //Use optional
-
-        return result.getUsername().equalsIgnoreCase(email);
-    }
-
-    @GetMapping("/testGetUser")
-    @PreAuthorize("hasAuthority('Admin')")
-    public String testGetUser() {
-        return "Test";
+    @GetMapping("/testGetUser/{username}")
+//    @PreAuthorize("hasAuthority('Admin')")
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @PreAuthorize("#username == authentication.name")
+//    @PostAuthorize("returnObject.username == authentication.name")
+    public User testGetUser(@PathVariable String username) {
+        return userService.findById(1);
     }
 }

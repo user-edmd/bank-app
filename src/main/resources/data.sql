@@ -1,8 +1,8 @@
-INSERT INTO users (first_name, last_name, address, ssn, dob, username, password)
-VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-14', 'edmondbasilan@gmail.com', 'ebasilan'),
-       ('Tom', 'Lugo', '456 B St San Diego, CA', '325-46-8779', '2000-01-01', 'tlugo@ebbankingtest.com', 'tlugo'),
-       ('Yvette', 'Cao', '710 Oslo Way San Diego, CA', '928-82-6833', '1990-12-12', 'ycao@grossmont.com', 'ycao'),
-       ('admin', 'admin', '789 C St San Diego, CA', '643-02-1054 ', '1995-09-30', 'admin', 'admin');
+INSERT INTO users (first_name, last_name, address, ssn, dob, username)
+VALUES ('Edmond', 'Basilan', '123 A St San Diego, CA', '123-45-6789', '1990-06-14', 'edmondbasilan@gmail.com'),
+       ('Tom', 'Lugo', '456 B St San Diego, CA', '325-46-8779', '2000-01-01', 'tlugo@ebbankingtest.com'),
+       ('Yvette', 'Cao', '710 Oslo Way San Diego, CA', '928-82-6833', '1990-12-12', 'ycao@grossmont.com'),
+       ('admin', 'admin', '789 C St San Diego, CA', '643-02-1054 ', '1995-09-30', 'admin');
 
 INSERT INTO account (account_type, account_number, User_id)
 VALUES ('Checking', '0000000000000001', 1),
