@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.edmond.bank.entity.User;
-import com.edmond.bank.model.AccountForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
 
 	public Account findById(int theId) {
 		Optional<Account> result = accountRepository.findById(theId);
-		Account account = null;
+		Account account;
 		if (result.isPresent()) {
 			account = result.get();
 		} else {
@@ -36,22 +35,13 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 
-	public void save(Account theAccount) {
-		accountRepository.save(theAccount);
+	public void save(Account account) {
+		accountRepository.save(account);
 	}
 
-	public void deleteById(int theId) {
-		accountRepository.deleteById(theId);
+	public void deleteById(int id) {
+		accountRepository.deleteById(id);
 	}
-
-//	public void createAccount(int userId, AccountForm accountForm) {
-//		User user = userService.findById(userId);
-//		Account account = new Account();
-//		account.setAccountType(accountForm.getAccountType());
-//		account.setUser(user);
-//		account.setAccountNumber(String.valueOf((long) (Math.random() * 10000000000000000L)));
-//		save(account);
-//	}
 
 	public void createAccount(Account account) {
 		User user = userService.findById(account.getUserId());
@@ -61,10 +51,4 @@ public class AccountServiceImpl implements AccountService {
 		account.setAccountNumber();
 		save(account);
 	}
-
-	public boolean userOwnsAccount(int userId, int accountId) {
-
-		return false;
-	}
-
 }

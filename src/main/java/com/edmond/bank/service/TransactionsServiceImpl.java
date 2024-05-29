@@ -1,15 +1,12 @@
 package com.edmond.bank.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.edmond.bank.model.TransactionsForm;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.edmond.bank.dao.TransactionsRepository;
@@ -29,13 +26,9 @@ public class TransactionsServiceImpl implements TransactionsService {
 	@Autowired
 	private AccountService accountService;
 
-//	public List<Transactions> findAll() {
-//		return transactionsRepository.findAll();
-//	}
-
 	public Transactions findById(int theId) {
 		Optional<Transactions> result = transactionsRepository.findById(theId);
-		Transactions transactions = null;
+		Transactions transactions;
 		if (result.isPresent()) {
 			transactions = result.get();
 		} else {
@@ -44,23 +37,23 @@ public class TransactionsServiceImpl implements TransactionsService {
 		return transactions;
 	}
 
-	public void save(Transactions theTransactions) {
-		if (theTransactions.getTransactionType().equalsIgnoreCase("withdraw")) {
-			if (theTransactions.getAccount().getAccountBalance() < theTransactions.getAmount()) {
+	public void save(Transactions transactions) {
+		if (transactions.getTransactionType().equalsIgnoreCase("withdraw")) {
+			if (transactions.getAccount().getAccountBalance() < transactions.getAmount()) {
 				throw new RuntimeException("Not enough balance in account to withdraw.");
 			}
-			Double temp = theTransactions.getAmount();
+			Double temp = transactions.getAmount();
 			temp *= -1;
-			theTransactions.setAmount(temp);
+			transactions.setAmount(temp);
 		}
 
-		if (theTransactions.getDate() == null)
-			theTransactions.setDate(DateTime.now().toLocalDate().toString());
-		transactionsRepository.save(theTransactions);
+		if (transactions.getDate() == null)
+			transactions.setDate(DateTime.now().toLocalDate().toString());
+		transactionsRepository.save(transactions);
 	}
 
-	public void deleteById(int theId) {
-		transactionsRepository.deleteById(theId);
+	public void deleteById(int id) {
+		transactionsRepository.deleteById(id);
 	}
 
 	public Double findTotalByAccountId(int accountId) {
@@ -114,7 +107,6 @@ public class TransactionsServiceImpl implements TransactionsService {
 
 	@Override
 	public Page<Transactions> findByAccountId(int accountId, Pageable pageable) {
-//		Pageable pageable = PageRequest.of(0, 5, Sort.by("id").descending());
 		return this.transactionsRepository.findByAccountId(accountId, pageable);
 	}
 
