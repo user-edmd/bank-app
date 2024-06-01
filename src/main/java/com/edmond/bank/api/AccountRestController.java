@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +26,11 @@ public class AccountRestController {
     UserService userService;
 
     @GetMapping("/{accountId}")
-    public Account getAccount(@PathVariable int accountId) {
-        return accountService.findById(accountId);
+    public ResponseEntity<Object> getAccount(@PathVariable int accountId, Authentication auth) {
+        if (accountService.findById(accountId).getUser().getUsername().equalsIgnoreCase(auth.getName()))
+            return ResponseHandler.generateResponse(HttpStatus.OK, accountService.findById(accountId));
+        else
+            return ResponseHandler.generateResponse(HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("/getAccounts")
@@ -68,5 +70,10 @@ public class AccountRestController {
         Account account = accountService.findById(accountId);
         if (account.getTransactionsList() == null)
             accountService.deleteById(accountId);
+    }
+
+    private boolean isOwnerOfAccount(int accountId, Authentication auth) {
+        Account account = this.accountService.findById(accountId);
+        return account.getUser().getUsername().equalsIgnoreCase(auth.getName());
     }
 }

@@ -55,6 +55,6 @@ public class UserRestController {
     @PreAuthorize("#username == authentication.name")
 //    @PostAuthorize("returnObject.username == authentication.name")
     public User testGetUser(@PathVariable String username) {
-        return userService.findById(1);
+        return userService.findUserByEmail(username);
     }
 }
