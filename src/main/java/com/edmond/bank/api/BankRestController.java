@@ -37,17 +37,18 @@ public class BankRestController {
 
     @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("api/user/all")
-    public ResponseEntity<Object> getAllUsers() {
-        List<User> userList = userService.findAll();
-        return ResponseHandler.generateResponse("OK", HttpStatus.OK, userList);
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userService.findAll(pageable);
     }
 
-    @GetMapping("accounts/all")
-    public List<Account> getAllAccounts() {
-        return accountService.findAll();
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("api/accounts/all")
+    public Page<Account> getAllAccounts(Pageable pageable) {
+        return accountService.findAll(pageable);
     }
 
-    @GetMapping("transactions/all")
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("api/transactions/all")
     public Page<Transactions> getAllTransactions(Pageable pageable) {
         return transactionsService.findAll(pageable);
     }

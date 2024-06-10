@@ -3,12 +3,12 @@ package com.edmond.bank.service;
 import java.util.List;
 
 import com.edmond.bank.entity.User;
-import com.edmond.bank.model.UserForm;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-	public List<User> findAll();
+	public Page<User> findAll(Pageable pageable);
 
 	public User findById(int theId);
 

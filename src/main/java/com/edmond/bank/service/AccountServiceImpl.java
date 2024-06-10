@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.edmond.bank.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.edmond.bank.dao.AccountRepository;
@@ -19,8 +21,8 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private UserService userService;
 
-	public List<Account> findAll() {
-		return accountRepository.findAll();
+	public Page<Account> findAll(Pageable pageable) {
+		return accountRepository.findAll(pageable);
 	}
 
 	public Account findById(int theId) {

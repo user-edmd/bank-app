@@ -8,6 +8,7 @@ import com.edmond.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,12 @@ public class AccountRestController {
     public List<Account> getAccountsFromUser(Authentication auth) {
         User user = userService.findUserByEmail(auth.getName());
         return (user != null) ? user.getAccountList() : null;
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/getAccountById/{accountId}")
+    public Account getAccountById(@PathVariable int accountId) {
+        return this.accountService.findById(accountId);
     }
 
     @GetMapping("/user/{userId}")

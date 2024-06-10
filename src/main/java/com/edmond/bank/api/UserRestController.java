@@ -19,13 +19,13 @@ public class UserRestController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("/getUser")
     public ResponseEntity<Object> getUser(Authentication auth) {
         String email = auth.getName();
         User result = userService.findUserByEmail(email); //Use optional
 
         if (result == null) {
-            return ResponseHandler.generateResponse("Register Required", HttpStatus.ACCEPTED, null);
+            return ResponseHandler.generateResponse(HttpStatus.NOT_FOUND);
         } else if (result.getUsername().equalsIgnoreCase(email)) {
             return ResponseHandler.generateResponse("OK", HttpStatus.OK, result);
         } else {
@@ -56,5 +56,13 @@ public class UserRestController {
 //    @PostAuthorize("returnObject.username == authentication.name")
     public User testGetUser(@PathVariable String username) {
         return userService.findUserByEmail(username);
+    }
+
+    //ADMIN ONLY
+
+    @GetMapping("/getUserById/{userId}")
+    @PreAuthorize("hasAuthority('Admin')")
+    public User getUserById(@PathVariable int userId) {
+        return this.userService.findById(userId);
     }
 }
