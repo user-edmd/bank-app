@@ -1,9 +1,10 @@
 package com.edmond.bank.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 import com.edmond.bank.model.TransactionsForm;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,13 +43,13 @@ public class TransactionsServiceImpl implements TransactionsService {
 			if (transactions.getAccount().getAccountBalance() < transactions.getAmount()) {
 				throw new RuntimeException("Not enough balance in account to withdraw.");
 			}
-			Double temp = transactions.getAmount();
+			double temp = transactions.getAmount();
 			temp *= -1;
 			transactions.setAmount(temp);
 		}
 
 		if (transactions.getDate() == null)
-			transactions.setDate(DateTime.now().toLocalDate().toString());
+			transactions.setDate(LocalDateTime.now(ZoneOffset.UTC));
 		transactionsRepository.save(transactions);
 	}
 
@@ -96,9 +97,10 @@ public class TransactionsServiceImpl implements TransactionsService {
 		Account account = accountService.findById(accountId);
 
 		Transactions transaction = new Transactions();
-		if (Double.parseDouble(transactionsForm.getAmount().replaceAll(",","")) <= 0)
+		double amount = Double.parseDouble(transactionsForm.getAmount().replaceAll(",",""));
+		if (amount <= 0)
 			throw new RuntimeException("Amount must be greater than $0.00");
-		transaction.setAmount(Double.parseDouble(transactionsForm.getAmount().replaceAll(",","")));
+		transaction.setAmount(amount);
 		transaction.setTransactionType(transactionsForm.getTransactionType());
 		transaction.setAccount(account);
 		account.setUser(user);

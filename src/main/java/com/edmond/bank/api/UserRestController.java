@@ -34,19 +34,13 @@ public class UserRestController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user, JwtAuthenticationToken auth) {
-        return userService.createUser(user);
-    }
-
-    @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable int userId, JwtAuthenticationToken auth) {
-        this.userService.deleteById(userId);
+    public User addUser(@RequestBody User user) {
+        return userService.save(user);
     }
 
     @PutMapping
-    public User updateUser(@RequestBody User user, JwtAuthenticationToken auth) {
-        this.userService.editUser(user);
-        return user;
+    public User updateUser(@RequestBody User user) {
+        return userService.editUser(user);
     }
 
     @GetMapping("/testGetUser/{username}")
@@ -64,5 +58,11 @@ public class UserRestController {
     @PreAuthorize("hasAuthority('Admin')")
     public User getUserById(@PathVariable int userId) {
         return this.userService.findById(userId);
+    }
+
+    @DeleteMapping("/{userId}")
+    @PreAuthorize("hasAuthority('Admin')")
+    public void deleteUser(@PathVariable int userId) {
+        this.userService.deleteById(userId);
     }
 }

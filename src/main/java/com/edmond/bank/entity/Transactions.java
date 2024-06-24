@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 
 @Data
 @Entity
@@ -22,7 +24,7 @@ public class Transactions {
 	private Double amount;
 
 	@Column(name = "date")
-	private String date;
+	private LocalDateTime date;
 
 	@Column(name = "Account_id", insertable = false, updatable = false)
 	private int accountId;

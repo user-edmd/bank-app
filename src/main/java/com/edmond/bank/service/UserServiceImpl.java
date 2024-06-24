@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll(pageable);
 	}
 
-	public User findById(int theId) {
-		Optional<User> result = userRepository.findById(theId);
+	public User findById(int id) {
+		Optional<User> result = userRepository.findById(id);
 		User user;
 		if (result.isPresent()) {
 			user = result.get();
@@ -32,39 +32,31 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-	public void save(User user) {
-		userRepository.save(user);
+	public User save(User user) {
+		Optional<User> result = Optional.ofNullable(userRepository.findByUsername(user.getUsername()));
+		if (result.isPresent())
+			throw new RuntimeException("Username already exists: " + user.getUsername());
+		return userRepository.save(user);
 	}
 
 	public void deleteById(int id) {
 		userRepository.deleteById(id);
 	}
 
-	public User createUser(User user) {
-		User newUser = new User();
-		newUser.setUsername(user.getUsername());
-		newUser.setFirstName(user.getFirstName());
-		newUser.setLastName(user.getLastName());
-		newUser.setAddress(user.getAddress());
-		newUser.setDob(user.getDob());
-		newUser.setSsn(user.getSsn());
-		save(newUser);
-		return newUser;
+	public User createUser(User newUser) {
+		return save(newUser);
 	}
 
-	public void editUser(User updatedUser) {
-		User user = findById(updatedUser.getId());
-		user.setUsername(updatedUser.getUsername());
-		user.setFirstName(updatedUser.getFirstName());
-		user.setLastName(updatedUser.getLastName());
-		user.setAddress(updatedUser.getAddress());
-		user.setDob(updatedUser.getDob());
-		user.setSsn(updatedUser.getSsn());
-		save(user);
+	public User editUser(User updatedUser) {
+		return save(updatedUser);
 	}
 
 	public User findUserByEmail(String email) {
 		return userRepository.findByUsername(email);
+	}
+
+	public List<User> findAll() {
+		return userRepository.findAll();
 	}
 
 }
