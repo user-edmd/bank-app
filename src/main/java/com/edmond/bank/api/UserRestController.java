@@ -8,8 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -22,12 +23,12 @@ public class UserRestController {
     @GetMapping("/getUser")
     public ResponseEntity<Object> getUser(Authentication auth) {
         String email = auth.getName();
-        User result = userService.findUserByEmail(email); //Use optional
+        Optional<User> user = userService.findUserByEmail(email);
 
-        if (result == null) {
+        if (user.isEmpty()) {
             return ResponseHandler.generateResponse(HttpStatus.NOT_FOUND);
-        } else if (result.getUsername().equalsIgnoreCase(email)) {
-            return ResponseHandler.generateResponse("OK", HttpStatus.OK, result);
+        } else if (user.get().getUsername().equalsIgnoreCase(email)) {
+            return ResponseHandler.generateResponse("OK", HttpStatus.OK, user);
         } else {
             return ResponseHandler.generateResponse("Unauthorized Access", HttpStatus.UNAUTHORIZED, null);
         }
@@ -48,7 +49,7 @@ public class UserRestController {
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @PreAuthorize("#username == authentication.name")
 //    @PostAuthorize("returnObject.username == authentication.name")
-    public User testGetUser(@PathVariable String username) {
+    public Optional<User> testGetUser(@PathVariable String username) {
         return userService.findUserByEmail(username);
     }
 
@@ -56,9 +57,7 @@ public class UserRestController {
 
     @GetMapping("/getUserById/{userId}")
     @PreAuthorize("hasAuthority('Admin')")
-    public User getUserById(@PathVariable int userId) {
-        return this.userService.findById(userId);
-    }
+    public Optional<User> getUserById(@PathVariable int userId) { return this.userService.findById(userId); }
 
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('Admin')")

@@ -2,9 +2,10 @@ package com.edmond.bank.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Optional;
 
-import com.edmond.bank.model.TransactionsForm;
+import com.edmond.bank.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.edmond.bank.dao.TransactionsRepository;
 import com.edmond.bank.entity.Account;
 import com.edmond.bank.entity.Transactions;
-import com.edmond.bank.entity.User;
 
 @Service
 public class TransactionsServiceImpl implements TransactionsService {
@@ -27,92 +27,88 @@ public class TransactionsServiceImpl implements TransactionsService {
 	@Autowired
 	private AccountService accountService;
 
-	public Transactions findById(int theId) {
-		Optional<Transactions> result = transactionsRepository.findById(theId);
-		Transactions transactions;
-		if (result.isPresent()) {
-			transactions = result.get();
-		} else {
-			throw new RuntimeException("Did not find transaction id");
-		}
-		return transactions;
+	public Optional<Transactions> findById(int id) {
+		return transactionsRepository.findById(id);
 	}
 
-	public void save(Transactions transactions) {
+	public Transactions save(Transactions transactions) {
+		Optional<Account> account = accountService.findById(transactions.getAccountId());
+		if (account.isEmpty())
+			throw new RuntimeException("Cannot find account");
+
+		transactions.setAccount(account.get());
+
 		if (transactions.getTransactionType().equalsIgnoreCase("withdraw")) {
-			if (transactions.getAccount().getAccountBalance() < transactions.getAmount()) {
+			if (account.get().getAccountBalance() < transactions.getAmount()) {
 				throw new RuntimeException("Not enough balance in account to withdraw.");
 			}
-			double temp = transactions.getAmount();
-			temp *= -1;
-			transactions.setAmount(temp);
+			transactions.setAmount(transactions.getAmount() * -1);
 		}
 
 		if (transactions.getDate() == null)
 			transactions.setDate(LocalDateTime.now(ZoneOffset.UTC));
-		transactionsRepository.save(transactions);
+		return transactionsRepository.save(transactions);
 	}
 
 	public void deleteById(int id) {
-		transactionsRepository.deleteById(id);
+		Optional<Transactions> transaction = transactionsRepository.findById(id);
+		if (transaction.isPresent())
+			transactionsRepository.deleteById(id);
 	}
 
-	public Double findTotalByAccountId(int accountId) {
-		return transactionsRepository.findTotalByAccountId(accountId);
-	}
+	public void transferBetweenAccounts(Account accountFrom, Account accountTo, Double amount) {
+		Optional<User> userFrom = userService.findById(accountFrom.getUserId());
+		Optional<User> userTo = userService.findById(accountTo.getUserId());
 
-	public void transferBetweenAccounts(Account accountIdFrom, Account accountIdTo, Double amount) {
+		if (userFrom.isEmpty() || userTo.isEmpty())
+			throw new RuntimeException("Unable to find user");
+
 		if (amount <= 0)
 			throw new RuntimeException("Transfer amount must be greater than zero");
 
-		if (accountIdFrom.getId() == accountIdTo.getId())
+		if (accountFrom.getId() == accountTo.getId())
 			throw new RuntimeException("Cannot transfer to same account");
 
-		User userFrom = userService.findById(accountIdFrom.getUserId());
-		accountIdFrom.setUser(userFrom);
+		if (amount > accountFrom.getAccountBalance())
+			throw new RuntimeException("Unable to transfer due to insufficient funds in account (..." + accountFrom.lastFourDigitsAcctNumber() + ")");
 
-		if (amount > accountIdFrom.getAccountBalance())
-			throw new RuntimeException("Unable to transfer due to insufficient funds in account (..." + accountIdFrom.lastFourDigitsAcctNumber() + ")");
+		accountFrom.setUser(userFrom.get());
+		accountTo.setUser(userTo.get());
 
-		Transactions transactionFrom = new Transactions();
-		transactionFrom.setAccount(accountIdFrom);
-		transactionFrom.setAccountId(accountIdFrom.getId());
-		transactionFrom.setAmount(amount * -1);
-		transactionFrom.setTransactionType("Transfer to " + accountIdTo.getAccountType() + " Account (..." + accountIdTo.lastFourDigitsAcctNumber() + ") " + accountIdTo.getUser().getFirstName().toUpperCase().charAt(0) + ". " + accountIdTo.getUser().getLastName().toUpperCase());
+		Transactions transactionFrom = Transactions.builder()
+				.account(accountFrom)
+				.accountId(accountFrom.getId())
+				.amount(amount * -1)
+				.transactionType("Transfer to " + accountTo.getAccountType() +
+						" Account (..." + accountTo.lastFourDigitsAcctNumber() + ") " +
+						accountTo.getUser().getFirstName().toUpperCase().charAt(0) + ". " +
+						accountTo.getUser().getLastName().toUpperCase())
+				.build();
 
-		User userTo = userService.findById(accountIdTo.getUserId());
-		accountIdTo.setUser(userTo);
-		Transactions transactionTo = new Transactions();
-		transactionTo.setAccount(accountIdTo);
-		transactionTo.setAccountId(accountIdTo.getId());
-		transactionTo.setAmount(amount);
-		transactionTo.setTransactionType("Transfer from " + accountIdFrom.getAccountType() + " Account (..." + accountIdFrom.lastFourDigitsAcctNumber() + ") " + accountIdFrom.getUser().getFirstName().toUpperCase().charAt(0) + ". " + accountIdFrom.getUser().getLastName().toUpperCase());
+		Transactions transactionTo = Transactions.builder()
+				.account(accountTo)
+				.accountId(accountTo.getId())
+				.amount(amount)
+				.transactionType("Transfer from " + accountFrom.getAccountType() +
+						" Account (..." + accountFrom.lastFourDigitsAcctNumber() + ") " +
+						accountFrom.getUser().getFirstName().toUpperCase().charAt(0) + ". " +
+						accountFrom.getUser().getLastName().toUpperCase())
+				.build();
 
-		this.save(transactionFrom);
-		this.save(transactionTo);
-	}
-
-	public void createTransaction(int accountId, int userId, TransactionsForm transactionsForm) {
-		User user = userService.findById(userId);
-		Account account = accountService.findById(accountId);
-
-		Transactions transaction = new Transactions();
-		double amount = Double.parseDouble(transactionsForm.getAmount().replaceAll(",",""));
-		if (amount <= 0)
-			throw new RuntimeException("Amount must be greater than $0.00");
-		transaction.setAmount(amount);
-		transaction.setTransactionType(transactionsForm.getTransactionType());
-		transaction.setAccount(account);
-		account.setUser(user);
-		save(transaction);
+		save(transactionFrom);
+		save(transactionTo);
 	}
 
 	@Override
 	public Page<Transactions> findByAccountId(int accountId, Pageable pageable) {
-		return this.transactionsRepository.findByAccountId(accountId, pageable);
+		return this.transactionsRepository.findTransactionsByAccountId(accountId, pageable);
 	}
 
 	public Page<Transactions> findAll(Pageable pageable) {
 		return this.transactionsRepository.findAll(pageable);
+	}
+
+	public List<Transactions> findAll() {
+		return this.transactionsRepository.findAll();
 	}
 }

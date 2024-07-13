@@ -21,19 +21,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll(pageable);
 	}
 
-	public User findById(int id) {
-		Optional<User> result = userRepository.findById(id);
-		User user;
-		if (result.isPresent()) {
-			user = result.get();
-		} else {
-			throw new RuntimeException("Did not find user id");
-		}
-		return user;
+	public Optional<User> findById(int id) {
+		return userRepository.findById(id);
 	}
 
 	public User save(User user) {
-		Optional<User> result = Optional.ofNullable(userRepository.findByUsername(user.getUsername()));
+		Optional<User> result = userRepository.findByUsername(user.getUsername());
 		if (result.isPresent())
 			throw new RuntimeException("Username already exists: " + user.getUsername());
 		return userRepository.save(user);
@@ -51,7 +44,7 @@ public class UserServiceImpl implements UserService {
 		return save(updatedUser);
 	}
 
-	public User findUserByEmail(String email) {
+	public Optional<User> findUserByEmail(String email) {
 		return userRepository.findByUsername(email);
 	}
 

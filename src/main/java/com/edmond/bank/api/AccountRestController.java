@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -28,7 +29,11 @@ public class AccountRestController {
 
     @GetMapping("/{accountId}")
     public ResponseEntity<Object> getAccount(@PathVariable int accountId, Authentication auth) {
-        if (accountService.findById(accountId).getUser().getUsername().equalsIgnoreCase(auth.getName()))
+        Optional<Account> account = accountService.findById(accountId);
+        if (account.isEmpty()) {
+            throw new RuntimeException("Account not found");
+        }
+        if (account.get().getUser().getUsername().equalsIgnoreCase(auth.getName()))
             return ResponseHandler.generateResponse(HttpStatus.OK, accountService.findById(accountId));
         else
             return ResponseHandler.generateResponse(HttpStatus.FORBIDDEN);
@@ -36,51 +41,52 @@ public class AccountRestController {
 
     @GetMapping("/getAccounts")
     public List<Account> getAccountsFromUser(Authentication auth) {
-        User user = userService.findUserByEmail(auth.getName());
-        return (user != null) ? user.getAccountList() : null;
-    }
-
-    @PreAuthorize("hasAuthority('Admin')")
-    @GetMapping("/getAccountById/{accountId}")
-    public Account getAccountById(@PathVariable int accountId) {
-        return this.accountService.findById(accountId);
+        Optional<User> user = userService.findUserByEmail(auth.getName());
+        return user.map(User::getAccountList).orElse(null);
+//        return (user.isPresent()) ? user.get().getAccountList() : nullya
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<Object> getAllAccounts(@PathVariable int userId, Authentication auth) {
-        User user = userService.findById(userId);
-        List<Account> result = user.getAccountList();
+        Optional<User> result = userService.findById(userId);
+        if (result.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        User user = result.get();
+        List<Account> userAccountList = user.getAccountList();
         String email = auth.getName();
         if (user.getUsername().equalsIgnoreCase(email))
-            return ResponseHandler.generateResponse("OK", HttpStatus.OK, result);
+            return ResponseHandler.generateResponse("OK", HttpStatus.OK, userAccountList);
         else
             return ResponseHandler.generateResponse("Unauthorized Access", HttpStatus.UNAUTHORIZED, null);
     }
 
     @PostMapping
     public Account createAccount(@RequestBody Account account) {
-        accountService.createAccount(account);
-        return account;
+        return accountService.createAccount(account);
     }
 
-    @PutMapping("/{accountId}")
-    public Account updateAccount(@PathVariable int accountId, @RequestBody Account account) {
-        Account updatedAccount = accountService.findById(accountId);
-        updatedAccount.setAccountType(account.getAccountType());
-        updatedAccount.setAccountNumber(account.getAccountNumber());
-        accountService.save(updatedAccount);
-        return updatedAccount;
-    }
+    // ADMIN ONLY
 
+    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{accountId}")
     public void deleteAccount(@PathVariable("accountId") int accountId) {
-        Account account = accountService.findById(accountId);
-        if (account.getTransactionsList() == null)
-            accountService.deleteById(accountId);
+        Optional<Account> account = accountService.findById(accountId);
+        if (account.isPresent()) {
+            if (account.get().getTransactionsList() == null)
+                accountService.deleteById(accountId);
+        }
     }
 
-    private boolean isOwnerOfAccount(int accountId, Authentication auth) {
-        Account account = this.accountService.findById(accountId);
-        return account.getUser().getUsername().equalsIgnoreCase(auth.getName());
+    @PreAuthorize("hasAuthority('Admin')")
+    @PutMapping("/{accountId}")
+    public Account updateAccount(@RequestBody Account account) {
+        return accountService.save(account);
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @GetMapping("/getAccountById/{accountId}")
+    public Optional<Account> getAccountById(@PathVariable int accountId) {
+        return this.accountService.findById(accountId);
     }
 }

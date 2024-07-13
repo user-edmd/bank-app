@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import com.edmond.bank.entity.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     Page<User> findAll(Pageable pageable);
 

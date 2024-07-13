@@ -2,13 +2,19 @@ package com.edmond.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "transactions")
 public class Transactions {
 
@@ -33,8 +39,4 @@ public class Transactions {
 	@JoinColumn(name = "Account_id", nullable = false)
 	@JsonBackReference
 	private Account account;
-
-	public Transactions() {
-	}
-
 }

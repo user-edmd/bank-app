@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,14 +49,11 @@ public class UserServiceTests {
     @DisplayName("Junit test for deleteUser method")
     @Test
     public void deleteUser() {
+        willDoNothing().given(userRepository).deleteById(user.getId());
 
-        int userId = 1;
+        userService.deleteById(user.getId());
 
-        willDoNothing().given(userRepository).deleteById(userId);
-
-        userService.deleteById(userId);
-
-        verify(userRepository, times(1)).deleteById(userId);
+        verify(userRepository, times(1)).deleteById(user.getId());
     }
 
     @DisplayName("Junit test for editUser method")
@@ -76,7 +74,7 @@ public class UserServiceTests {
 
     @DisplayName("JUnit test for getAllUsers method")
     @Test
-    public void givenEmployeesList_whenGetAllEmployees_thenReturnEmployeesList(){
+    public void getAllUsers(){
         // given - precondition or setup
 
         User user1 = User.builder()
@@ -101,12 +99,12 @@ public class UserServiceTests {
 
     @DisplayName("JUnit test for getUserById method")
     @Test
-    public void givenEmployeeId_whenGetEmployeeById_thenReturnEmployeeObject(){
+    public void getUserById(){
         // given
         given(userRepository.findById(1)).willReturn(Optional.of(user));
 
         // when
-        User savedUser = userService.findById(user.getId());
+        Optional<User> savedUser = userService.findById(user.getId());
 
         // then
         assertThat(savedUser).isNotNull();
@@ -115,7 +113,7 @@ public class UserServiceTests {
 
     @DisplayName("JUnit test for save method")
     @Test
-    public void givenEmployeeObject_whenSaveEmployee_thenReturnEmployeeObject(){
+    public void saveMethod(){
         // given - precondition or setup
 //        given(userRepository.findByUsername(user.getUsername()))
 //                .willReturn();

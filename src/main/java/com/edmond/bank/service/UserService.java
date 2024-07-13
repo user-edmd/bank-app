@@ -10,10 +10,10 @@ import org.springframework.data.domain.Pageable;
 public interface UserService {
 	Page<User> findAll(Pageable pageable);
 	List<User> findAll();
-	User findById(int theId);
+	Optional<User> findById(int id);
 	User save(User user);
-	void deleteById(int theId);
+	void deleteById(int id);
 	User createUser(User user);
 	User editUser(User user);
-	User findUserByEmail(String email);
+	Optional<User> findUserByEmail(String email);
 }

@@ -23,31 +23,27 @@ import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAuthority('Admin')")
 @RestController("/")
 public class BankRestController {
 
     @Autowired
     UserService userService;
-
     @Autowired
     AccountService accountService;
-
     @Autowired
     TransactionsService transactionsService;
 
-    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("api/user/all")
     public Page<User> getAllUsers(Pageable pageable) {
         return userService.findAll(pageable);
     }
 
-    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("api/accounts/all")
     public Page<Account> getAllAccounts(Pageable pageable) {
         return accountService.findAll(pageable);
     }
 
-    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("api/transactions/all")
     public Page<Transactions> getAllTransactions(Pageable pageable) {
         return transactionsService.findAll(pageable);

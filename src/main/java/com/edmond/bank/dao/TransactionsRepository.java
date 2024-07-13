@@ -14,7 +14,7 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Inte
 	@Query(value = "SELECT SUM(m.amount) FROM transactions m WHERE Account_id = :accountId", nativeQuery = true)
 	Double findTotalByAccountId(@Param("accountId") int accountId);
 
-	Page<Transactions> findByAccountId(int accountId, Pageable pageable);
+	Page<Transactions> findTransactionsByAccountId(int accountId, Pageable pageable);
 
 	Page<Transactions> findAll(Pageable pageable);
 

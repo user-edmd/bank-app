@@ -25,32 +25,38 @@ public class AccountServiceImpl implements AccountService {
 		return accountRepository.findAll(pageable);
 	}
 
-	public Account findById(int theId) {
-		Optional<Account> result = accountRepository.findById(theId);
-		Account account;
-		if (result.isPresent()) {
-			account = result.get();
-		} else {
-			throw new RuntimeException("Did not find account id");
-		}
-		return account;
+	public List<Account> findAll() { return accountRepository.findAll(); }
+
+	public Optional<Account> findById(int id) {
+//		Optional<Account> result = accountRepository.findById(theId);
+//		Account account;
+//		if (result.isPresent()) {
+//			account = result.get();
+//		} else {
+//			throw new RuntimeException("Did not find account id");
+//		}
+//		return account;
+		return accountRepository.findById(id);
 
 	}
 
-	public void save(Account account) {
-		accountRepository.save(account);
+	public Account save(Account account) {
+		return accountRepository.save(account);
 	}
 
 	public void deleteById(int id) {
 		accountRepository.deleteById(id);
 	}
 
-	public void createAccount(Account account) {
-		User user = userService.findById(account.getUserId());
-		account.setUser(user);
-		account.setAccountType(account.getAccountType());
-		save(account);
-		account.setAccountNumber();
-		save(account);
+	public Account createAccount(Account account) {
+		Optional<User> user = userService.findById(account.getUserId());
+		if (user.isPresent()) {
+			account.setUser(user.get());
+			Account newAccount = save(account);
+			newAccount.setAccountNumber();
+			return save(newAccount);
+		} else {
+			throw new RuntimeException("User cannot be found");
+		}
 	}
 }
