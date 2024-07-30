@@ -36,7 +36,7 @@ public class UserRestController {
 
     @PostMapping
     public User addUser(@RequestBody User user) {
-        return userService.save(user);
+        return userService.createUser(user);
     }
 
     @PutMapping

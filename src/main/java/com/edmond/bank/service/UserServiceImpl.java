@@ -26,9 +26,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User save(User user) {
-		Optional<User> result = userRepository.findByUsername(user.getUsername());
-		if (result.isPresent())
-			throw new RuntimeException("Username already exists: " + user.getUsername());
 		return userRepository.save(user);
 	}
 
@@ -36,12 +33,27 @@ public class UserServiceImpl implements UserService {
 		userRepository.deleteById(id);
 	}
 
-	public User createUser(User newUser) {
-		return save(newUser);
+	public User createUser(User user) {
+		Optional<User> result = userRepository.findByUsername(user.getUsername());
+		if (result.isPresent())
+			throw new RuntimeException("Username already exists: " + user.getUsername());
+		return save(user);
 	}
 
 	public User editUser(User updatedUser) {
-		return save(updatedUser);
+		Optional<User> foundUser = userRepository.findById(updatedUser.getId());
+		if (foundUser.isPresent()) {
+			foundUser.get().setUsername(updatedUser.getUsername());
+			foundUser.get().setFirstName(updatedUser.getFirstName());
+			foundUser.get().setLastName(updatedUser.getLastName());
+			foundUser.get().setAddress(updatedUser.getAddress());
+			foundUser.get().setDob(updatedUser.getDob());
+			foundUser.get().setSsn(updatedUser.getSsn());
+			foundUser.get().setUsername(updatedUser.getUsername());
+			return this.userRepository.save(foundUser.get());
+		} else {
+			throw new RuntimeException("User does not exist.");
+		}
 	}
 
 	public Optional<User> findUserByEmail(String email) {
